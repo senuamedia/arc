@@ -1,2 +1,2 @@
 # arc
-ARC drupal 8 migration project
+Drupal 8 ARC development project
