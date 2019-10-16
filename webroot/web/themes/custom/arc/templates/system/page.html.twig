@@ -92,6 +92,8 @@
   {% endblock %}
 {% endif %}
 
+{{  page.section_slideshow}}
+
 {# Main #}
 {% block main %}
   <div role="main" class="main-container {{ container }} js-quickedit-main-content">
@@ -159,6 +161,11 @@
   </div>
 {% endblock %}
 
+{% if page.footer_top %}
+  {{ page.footer_top }}
+{% endif %}
+
+
 {% if page.footer %}
   {% block footer %}
     <footer class="footer" role="contentinfo">
@@ -167,4 +174,8 @@
       </div>
     </footer>
   {% endblock %}
+{% endif %}
+
+{% if page.footer_bottom %}
+  {{ page.footer_bottom }}
 {% endif %}

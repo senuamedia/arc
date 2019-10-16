@@ -9,14 +9,17 @@ package: 'Bootstrap'
 regions:
   navigation: 'Navigation'
   navigation_collapsible: 'Navigation (Collapsible)'
+  section_slideshow : Slideshow
   header: 'Top Bar'
   highlighted: 'Highlighted'
   help: 'Help'
   content: 'Content'
   sidebar_first: 'Primary'
   sidebar_second: 'Secondary'
+  footer_top : "Footer top"
   footer: 'Footer'
   page_top: 'Page top'
+  footer_bottom : "Footer bottom"
   page_bottom: 'Page bottom'
 
 libraries-extend:
