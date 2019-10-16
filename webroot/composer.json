@@ -26,6 +26,7 @@
         "drupal/console": "^1.0.2",
         "drupal/core": "^8.7.0",
         "drupal/ctools": "^3.2",
+        "drupal/entity_usage": "^2.0@beta",
         "drupal/media_bulk_upload": "^1.0",
         "drupal/migrate_tools": "^4.1",
         "drupal/paragraphs": "^1.9",
