@@ -1,0 +1,22 @@
+uuid: 151fdb77-6723-46cf-9a13-a1ce9e4d633d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.arc
+  module:
+    - text
+id: node.arc.body
+field_name: body
+entity_type: node
+bundle: arc
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

@@ -1,0 +1,31 @@
+uuid: fc226c77-ce23-4902-a0de-1b850f7843f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - webform.webform.offer_donation
+  module:
+    - system
+    - webform
+  theme:
+    - arc
+id: webform_2
+theme: arc
+region: content
+weight: -15
+provider: null
+plugin: webform_block
+settings:
+  id: webform_block
+  label: 'Offer a Donation'
+  provider: webform
+  label_display: visible
+  webform_id: offer_donation
+  default_data: ''
+  redirect: false
+visibility:
+  request_path:
+    id: request_path
+    pages: /donation-form
+    negate: false
+    context_mapping: {  }

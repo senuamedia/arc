@@ -1,0 +1,8 @@
+uuid: 72c1748e-c86d-4050-882a-3d71552219ac
+langcode: en
+status: true
+dependencies: {  }
+name: 'Categories 1'
+vid: categories_1
+description: 'Photography, Video, Sound (collections)'
+weight: 0

@@ -1,0 +1,15 @@
+uuid: af4600ce-7f8e-49f7-a38c-d13e6b8507ab
+langcode: en
+status: true
+dependencies: {  }
+name: image_1900x1900
+label: 'Image (1900x1900)'
+effects:
+  2a8c803c-c036-4fd2-8133-b17251b4ef1f:
+    uuid: 2a8c803c-c036-4fd2-8133-b17251b4ef1f
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1900
+      height: 1900
+      anchor: center-center

@@ -1,0 +1,92 @@
+uuid: be175577-f83a-48b4-b186-42870563c6c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.topic.field_feedback
+    - field.field.node.topic.field_hero_image
+    - field.field.node.topic.field_thumbnail
+    - field.field.node.topic.field_topics
+    - image.style.thumbnail
+    - node.type.topic
+  module:
+    - comment
+    - field_layout
+    - image
+    - layout_discovery
+    - paragraphs
+    - path
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
+id: node.topic.default
+targetEntityType: node
+bundle: topic
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_feedback:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: comment_default
+    region: content
+  field_hero_image:
+    weight: 4
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_thumbnail:
+    weight: 5
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_topics:
+    type: entity_reference_paragraphs
+    weight: 6
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 3
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  promote: true
+  sticky: true
+  uid: true

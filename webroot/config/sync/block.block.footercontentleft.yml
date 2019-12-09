@@ -1,0 +1,25 @@
+uuid: f6eb39b4-ca45-496c-979b-3c4b110cd18e
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:5085b432-2980-4456-9088-fac0c4f8d266'
+  module:
+    - block_content
+  theme:
+    - arc
+id: footercontentleft
+theme: arc
+region: footer
+weight: -10
+provider: null
+plugin: 'block_content:5085b432-2980-4456-9088-fac0c4f8d266'
+settings:
+  id: 'block_content:5085b432-2980-4456-9088-fac0c4f8d266'
+  label: 'Footer content - left'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

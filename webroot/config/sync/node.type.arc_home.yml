@@ -1,0 +1,18 @@
+uuid: 9aa1a12b-24bd-4f51-ab99-0e0288dc44c9
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Arc home'
+type: arc_home
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,31 @@
+uuid: dee1e00a-46de-4934-8b66-a02ab15f84b1
+langcode: en
+status: true
+dependencies:
+  config:
+    - webform.webform.volunteer_application
+  module:
+    - system
+    - webform
+  theme:
+    - arc
+id: webform
+theme: arc
+region: content
+weight: -16
+provider: null
+plugin: webform_block
+settings:
+  id: webform_block
+  label: 'Volunteer Application'
+  provider: webform
+  label_display: visible
+  webform_id: volunteer_application
+  default_data: ''
+  redirect: false
+visibility:
+  request_path:
+    id: request_path
+    pages: /volunteer
+    negate: false
+    context_mapping: {  }

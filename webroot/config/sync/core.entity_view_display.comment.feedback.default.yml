@@ -1,0 +1,45 @@
+uuid: 4fe04db8-59f3-4291-9f17-6aeb8dea8d03
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.feedback
+    - field.field.comment.feedback.comment_body
+    - field.field.comment.feedback.field_comment_email
+    - field.field.comment.feedback.field_comment_name
+    - field.field.comment.feedback.field_comment_website
+    - field.field.comment.feedback.field_follow_comments_by_email
+    - field.field.comment.feedback.field_get_new_posts_by_email
+  module:
+    - text
+id: comment.feedback.default
+targetEntityType: comment
+bundle: feedback
+mode: default
+content:
+  comment_body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_comment_email:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_comment_name:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden:
+  field_comment_website: true
+  field_follow_comments_by_email: true
+  field_get_new_posts_by_email: true
+  links: true

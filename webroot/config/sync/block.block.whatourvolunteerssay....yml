@@ -1,0 +1,31 @@
+uuid: bffe31c1-f1e7-4b61-8507-f7d726923f42
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:d58b5b52-4f45-4428-b494-e05186a7221a'
+  module:
+    - block_content
+    - system
+  theme:
+    - arc
+id: whatourvolunteerssay...
+theme: arc
+region: sidebar_second
+weight: -7
+provider: null
+plugin: 'block_content:d58b5b52-4f45-4428-b494-e05186a7221a'
+settings:
+  id: 'block_content:d58b5b52-4f45-4428-b494-e05186a7221a'
+  label: 'What our volunteers say…'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: /volunteering
+    negate: false
+    context_mapping: {  }

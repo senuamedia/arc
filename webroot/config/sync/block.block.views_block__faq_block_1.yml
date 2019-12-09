@@ -1,0 +1,30 @@
+uuid: 6e8ceee8-5390-434f-8aa5-1deecf328612
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.faq
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__faq_block_1
+theme: arc
+region: content
+weight: -10
+provider: null
+plugin: 'views_block:faq-block_1'
+settings:
+  id: 'views_block:faq-block_1'
+  label: 'Quick Questions'
+  provider: views
+  label_display: visible
+  views_label: 'Quick Questions'
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/enquiries\r\n/donation-form\r\n/volunteer\r\n/contact"
+    negate: false
+    context_mapping: {  }

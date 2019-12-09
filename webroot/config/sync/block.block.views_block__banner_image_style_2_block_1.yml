@@ -1,0 +1,33 @@
+uuid: a1b664b4-0eee-4722-afcd-788b7806df43
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.banner_image_style_2
+  module:
+    - node
+    - views
+  theme:
+    - arc
+id: views_block__banner_image_style_2_block_1
+theme: arc
+region: header
+weight: -17
+provider: null
+plugin: 'views_block:banner_image_style_2-block_1'
+settings:
+  id: 'views_block:banner_image_style_2-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  node_type:
+    id: node_type
+    bundles:
+      topic: topic
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

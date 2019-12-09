@@ -1,0 +1,27 @@
+uuid: 9858271e-3ce3-465a-915f-ac7353ddbe45
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_attach_file
+    - node.type.published
+  module:
+    - file
+id: node.published.field_attach_file
+field_name: field_attach_file
+entity_type: node
+bundle: published
+label: 'Attach file'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: field/file
+  file_extensions: 'pdf doc docx xls xlsx jpg npg zip rar'
+  max_filesize: ''
+  description_field: true
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

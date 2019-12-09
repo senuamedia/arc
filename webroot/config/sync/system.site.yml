@@ -1,0 +1,14 @@
+uuid: 1b37199a-47c7-4ad3-a044-2783906971b3
+name: ARC
+mail: rhiggins@cityofparramatta.nsw.gov.au
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node/914
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yTxtFqBHnEWxQswuWvkjE8mKw2t8oKuCL1q8KnfHuGE

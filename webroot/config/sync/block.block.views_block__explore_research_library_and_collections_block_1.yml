@@ -1,0 +1,30 @@
+uuid: dbefbe3a-ed32-4cc2-90e5-0c83605d54bf
+langcode: en
+status: false
+dependencies:
+  config:
+    - views.view.explore_research_library_and_collections
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__explore_research_library_and_collections_block_1
+theme: arc
+region: content
+weight: -6
+provider: null
+plugin: 'views_block:explore_research_library_and_collections-block_1'
+settings:
+  id: 'views_block:explore_research_library_and_collections-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

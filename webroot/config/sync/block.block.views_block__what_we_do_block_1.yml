@@ -1,0 +1,30 @@
+uuid: 41630da1-22f0-474c-8d19-d84f0a6539f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.what_we_do
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__what_we_do_block_1
+theme: arc
+region: content
+weight: -7
+provider: null
+plugin: 'views_block:what_we_do-block_1'
+settings:
+  id: 'views_block:what_we_do-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /arc/home-page
+    negate: false
+    context_mapping: {  }

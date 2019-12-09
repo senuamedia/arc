@@ -1,0 +1,15 @@
+uuid: acade2a7-50af-4c6b-a324-0d77b6902349
+langcode: en
+status: true
+dependencies: {  }
+name: image_1440x420
+label: 'Image (1440x420)'
+effects:
+  7ba883d0-1cd6-436e-a1a4-b7b395e4e194:
+    uuid: 7ba883d0-1cd6-436e-a1a4-b7b395e4e194
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1440
+      height: 420
+      anchor: center-center

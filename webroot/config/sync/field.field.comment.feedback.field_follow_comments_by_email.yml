@@ -1,0 +1,23 @@
+uuid: 47789515-5f9e-47b3-8d15-598365bcdce0
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.feedback
+    - field.storage.comment.field_follow_comments_by_email
+id: comment.feedback.field_follow_comments_by_email
+field_name: field_follow_comments_by_email
+entity_type: comment
+bundle: feedback
+label: 'Notify me of follow-up comments by email.'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

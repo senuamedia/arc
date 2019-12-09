@@ -1,0 +1,32 @@
+uuid: d206b15c-26ee-4384-92c8-fe510c8baf21
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.arc.body
+    - field.field.node.arc.field_hero_image
+    - field.field.node.arc.field_summary
+    - node.type.arc
+  module:
+    - text
+    - user
+id: node.arc.default
+targetEntityType: node
+bundle: arc
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_hero_image: true
+  field_summary: true

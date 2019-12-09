@@ -1,0 +1,25 @@
+uuid: afab831e-7c3a-4efb-80ef-f638e0a7bb31
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:e63c3974-91a9-4775-9e2a-fd1fc2d71a78'
+  module:
+    - block_content
+  theme:
+    - arc
+id: whatyoucanandcantdowiththisinformation
+theme: arc
+region: footer
+weight: 0
+provider: null
+plugin: 'block_content:e63c3974-91a9-4775-9e2a-fd1fc2d71a78'
+settings:
+  id: 'block_content:e63c3974-91a9-4775-9e2a-fd1fc2d71a78'
+  label: "What you can and can't do with\_this information"
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

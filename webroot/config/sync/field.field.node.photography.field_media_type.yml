@@ -1,0 +1,29 @@
+uuid: bdeeda16-e805-4870-b40d-6123b281bccb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_type
+    - node.type.photography
+    - taxonomy.vocabulary.categories_1
+id: node.photography.field_media_type
+field_name: field_media_type
+entity_type: node
+bundle: photography
+label: 'Media type'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categories_1: categories_1
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

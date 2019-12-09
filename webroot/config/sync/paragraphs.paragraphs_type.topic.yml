@@ -1,0 +1,16 @@
+uuid: fefc0bd7-5cb9-4da5-ba5e-f2ed96fcc200
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'file:file:8f7da449-3596-44c3-84c2-22235976e0ca'
+  module:
+    - paragraphs_library
+third_party_settings:
+  paragraphs_library:
+    allow_library_conversion: true
+id: topic
+label: Topic
+icon_uuid: 8f7da449-3596-44c3-84c2-22235976e0ca
+description: ''
+behavior_plugins: {  }

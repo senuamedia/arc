@@ -1,0 +1,30 @@
+uuid: 91388924-3e75-47a3-8a29-ca516995fa50
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.banner_contact
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__banner_contact_block_1
+theme: arc
+region: header
+weight: 0
+provider: null
+plugin: 'views_block:banner_contact-block_1'
+settings:
+  id: 'views_block:banner_contact-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/contact\r\n/enquiries\r\n/what-on\r\n/donation-form\r\n/volunteer"
+    negate: false
+    context_mapping: {  }
