@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains arc_importer.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function arc_importer_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the arc_importer module.
+    case 'help.page.arc_importer':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Arc Importer') . '</p>';
+      return $output;
+
+    default:
+  }
+}

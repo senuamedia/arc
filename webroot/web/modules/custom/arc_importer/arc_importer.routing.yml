@@ -1,0 +1,9 @@
+arc_importer.import:
+  path: '/admin/arc/import'
+  defaults:
+    _form: '\Drupal\arc_importer\Form\ImporterForm'
+    title: ARC Importer
+  requirements:
+    _permission: 'administer site import'
+  options:
+    _admin_route: TRUE
