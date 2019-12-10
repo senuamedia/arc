@@ -133,7 +133,7 @@ class ImporterController extends ControllerBase {
           [$this, 'doProcessBatch'],
           [
             $file_id,
-            20
+            5
           ],
         ]
       ],
@@ -208,7 +208,7 @@ class ImporterController extends ControllerBase {
           // For now
           // TODO: remove this
           'field_sample_content' => TRUE,
-          'status' => 0, // Unpublished, to filter out
+          'status' => 1
         ]);
 
         // If there is sub-category to set
@@ -339,11 +339,62 @@ class ImporterController extends ControllerBase {
   protected function fetchBodyFromUrl($url) {
     try {
       $raw_content = $this->getContentViaUrl($url);
-      $crawler = new Crawler($raw_content);
+      $crawler  = new Crawler($raw_content);
       $articles = $crawler->filter('article');
-      $article_nodes = $articles->filter('div.entry-content');
+      $article_filtered = $articles->filter('div.entry-content > p,blockquote');
+  
+      $img_elems = $article_filtered->filter('img');
+  
+      $img_elems
+        ->each(function (Crawler $node, $i) {
+          $dom_elem = $node->getNode(0);
+          # Fetch the image
+          // srcset should have higher priority
+          $img_source = $node->attr('srcset');
+          if (!empty($img_source)) {
+            /** Match structure:
+             *  [
+             *    0 => https://example.com/wp-content/uploads/2016/02/logo-home.png 793w
+             *    1 => png
+             *    2 => 793
+             * ]
+            */
+            preg_match_all('/[^"\'=\s]+\.(jpe?g|png|gif) ([0-9]*)w/', $img_source, $matches, PREG_SET_ORDER);
+            // Only use the largest file from srcset
+            usort ($matches, function ($x, $y) {
+              return $x[2] < $y[2];	
+            });
+            $img_source = explode(" ", $matches[0][0]);
+            $img_source = $img_source[0];
+            $img_source = trim($img_source);
+          }
+  
+          if (empty($img_source)) {
+            $img_source = $node->attr('src');
+          }
+  
+          $path = parse_url($img_source, PHP_URL_PATH); 
+          $img_name = basename($path);
+  
+          if (!empty($img_source)) {
+            $directory = 'public://article-images/';
+            $this->fileSystem
+              ->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+  
+            $image_file = system_retrieve_file($img_source, $directory . $img_name, TRUE, FILE_EXISTS_REPLACE);
+            if ($image_file) {
+              $dom_elem->removeAttribute('srcset');
+              $dom_elem->setAttribute('src', $image_file->url());
+            }
+          }
+        });
+  
+      $html = '';
+      foreach ($article_filtered as $element) {
+        $html .= $element->ownerDocument->saveHTML($element);
+      };
 
-      return $article_nodes->html();
+      return $html;
     }
     catch (\Exception $e) {
       $this->logger
@@ -358,65 +409,9 @@ class ImporterController extends ControllerBase {
 
   public function test() {
     $wp_post_url = 'http://arc.parracity.nsw.gov.au/blog/2017/02/03/cambria-hall-a-hidden-cornerstone-of-epping-history';
-    $raw_content = $this->getContentViaUrl($wp_post_url);
-    $crawler  = new Crawler($raw_content);
-    $articles = $crawler->filter('article');
-    $article_filtered = $articles->filter('div.entry-content > p,blockquote');
-
-    $img_elems = $article_filtered->filter('img');
-
-    $img_elems
-      ->each(function (Crawler $node, $i) {
-        $dom_elem = $node->getNode(0);
-        # Fetch the image
-        // srcset should have higher priority
-        $img_source = $node->attr('srcset');
-        if (!empty($img_source)) {
-          /** Match structure:
-           *  [
-           *    0 => https://example.com/wp-content/uploads/2016/02/logo-home.png 793w
-           *    1 => png
-           *    2 => 793
-           * ]
-          */
-          preg_match_all('/[^"\'=\s]+\.(jpe?g|png|gif) ([0-9]*)w/', $img_source, $matches, PREG_SET_ORDER);
-          // Only use the largest file from srcset
-          usort ($matches, function ($x, $y) {
-            return $x[2] < $y[2];	
-          });
-          $img_source = explode(" ", $matches[0][0]);
-          $img_source = $img_source[0];
-          $img_source = trim($img_source);
-        }
-
-        if (empty($img_source)) {
-          $img_source = $node->attr('src');
-        }
-
-        $path = parse_url($img_source, PHP_URL_PATH); 
-        $img_name = basename($path);
-
-        if (!empty($img_source)) {
-          $directory = 'public://article-images/';
-          $this->fileSystem
-            ->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
-
-          $image_file = system_retrieve_file($img_source, $directory . $img_name, TRUE, FILE_EXISTS_REPLACE);
-          if ($image_file) {
-            $dom_elem->removeAttribute('srcset');
-            $dom_elem->setAttribute('src', $image_file->url());
-          }
-        }
-      });
-
-    $html = '';
-    foreach ($article_filtered as $element) {
-      $html .= $element->ownerDocument->saveHTML($element);
-    };
-    // echo $html;  exit;
 
     return [
-      '#markup' => $html
+      '#markup' => $this->fetchBodyFromUrl($wp_post_url)
     ];
   }
 }
