@@ -534,7 +534,7 @@ if ($settings['hash_salt']) {
  * See https://www.drupal.org/documentation/modules/file for more information
  * about securing private files.
  */
-# $settings['file_private_path'] = '';
+ $settings['file_private_path'] = 'sites/default/files/private';
 
 /**
  * Session write interval:
@@ -739,6 +739,7 @@ $settings['trusted_host_patterns'] = [
     '^arcprod\.parracity\.nsw\.gov\.au$',
     '^arc\.parracity\.nsw\.gov\.au$',
     '^arc\.local$',
+   '^arc-dev\.senuamedia\.com$',
  ];
 
 /**
@@ -792,9 +793,9 @@ $settings['entity_update_backup'] = TRUE;
 $config_directories['sync'] = '../config/sync';
 
 $databases['default']['default'] = array (
-  'database' => 'arc',
-  'username' => 'arcdbuser',
-  'password' => 'a3cdbPwd123!@#',
+  'database' => 'arc_arc',
+  'username' => 'arc',
+  'password' => 'LmXw901T',
   'prefix' => '',
   'host' => '127.0.0.1',
   'port' => '3306',
