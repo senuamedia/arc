@@ -49,7 +49,7 @@ class ArcImporterUtils extends ServiceProviderBase {
         ->getStorage('taxonomy_term')
         ->loadByProperties(['name' => $term_name]);
 
-        \Drupal::logger('Acr')->warning("term loaded: " . $term_name);
+        // \Drupal::logger('Acr')->warning("term loaded: " . $term_name);
     }
     return isset($term) ? $term : NULL;
   }

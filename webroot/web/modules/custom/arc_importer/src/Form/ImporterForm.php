@@ -20,6 +20,22 @@ class ImporterForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    // $this->database = \Drupal::database();
+    // $query = $this->database
+    //   ->select('wp_2_posts', 'wp')
+    //   ->fields('wp')
+    //   ->range(2, 1);
+    // $results = $query->execute();
+
+    // foreach ($results as $id => $row) {
+    //   print_r($id);
+    //   print_r($row->ID);
+    //   // print_r($row->post_content);
+    //   echo '<br>';
+    // }
+    // exit;
+    
+  
     $form['import_file'] = [
       '#type'  => 'managed_file',
       '#name'  => 'import_file',
@@ -62,11 +78,7 @@ class ImporterForm extends FormBase {
           ->addError("Error when importing: " . $e->getMessage());
       }
     }
-    // $json = file_get_contents('/assets/json/wp_2_posts.json');
-
-    // $this->messenger()
-    //   ->addMessage($print_r(json_decode($json)))
-    //
+    
     $this->messenger()
       ->addMessage("Import Successfully!");
   }

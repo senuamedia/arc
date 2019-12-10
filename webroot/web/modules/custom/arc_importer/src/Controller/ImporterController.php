@@ -5,6 +5,7 @@ namespace Drupal\arc_importer\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
@@ -14,7 +15,9 @@ use Drupal\file\Entity\File;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 
+use GuzzleHttp\Client;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  ** Class ImporterController.
@@ -34,6 +37,12 @@ class ImporterController extends ControllerBase {
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
+  /**
+   * The file system service.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
   /**
    * @var \Drupal\Core\StreamWrapper\StreamWrapperInterface
    */
@@ -55,10 +64,12 @@ class ImporterController extends ControllerBase {
    */
   public function __construct(
     Connection $database,
+    FileSystemInterface $file_system,
     StreamWrapperManagerInterface $stream_wrapper_manager,
     LoggerChannelFactoryInterface $logger_factory)
   {
     $this->database = $database;
+    $this->fileSystem = $file_system;
     $this->streamWrapperManager = $stream_wrapper_manager;
 
     $this->logger = $logger_factory->get('ARC:Import');
@@ -70,6 +81,7 @@ class ImporterController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database'),
+      $container->get('file_system'),
       $container->get('stream_wrapper_manager'),
       $container->get('logger.factory')
     );
@@ -121,7 +133,7 @@ class ImporterController extends ControllerBase {
           [$this, 'doProcessBatch'],
           [
             $file_id,
-            1
+            20
           ],
         ]
       ],
@@ -158,7 +170,7 @@ class ImporterController extends ControllerBase {
         'raw_data' => $raw_data,
         // Real data start from row 5
         'progress' => 5,
-        'total'    => 5//count($raw_data)
+        'total'    => 100//count($raw_data)
       ];
       $context['results']['imported'] = 0;
     }
@@ -182,11 +194,12 @@ class ImporterController extends ControllerBase {
           continue;
         }
 
-        $arc_utils = \Drupal::service('arc_importer.utils');          
+        $arc_utils = \Drupal::service('arc_importer.utils');
+        $post_title = html_entity_decode($row_data['A']); // The spreadsheet data contains html entities
 
         $node = Node::create([
           'type'  => 'article',
-          'title' => html_entity_decode($row_data['A']), // The spreadsheet data has html entities
+          'title' => $post_title,
           'body'  => $row_data['B'], // for now use url as body
           'field_category_1' => $arc_utils->loadTermByName($row_data['C']),
           'field_category_2' => $arc_utils->loadTermByName($row_data['D']),
@@ -210,13 +223,29 @@ class ImporterController extends ControllerBase {
             }
           }
         }
+        // Set author to content_importer
+        $node->setOwnerId(42);
         $node->save();
+
+        # Process the body
+        $wp_post_url = $row_data['B'];
+        $raw_body = $this->fetchBodyFromUrl($wp_post_url);
+
+        # Completed
+        if (isset($raw_body)) {
+          $node->set('body', [
+            'format' => 'full_html',
+            'value'  => $raw_body
+          ]);
+          // $node->set('body', $raw_content);
+          $node->save();
+        }
 
         $context['results']['imported']++;
         $sandbox['progress']++;
       }
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       $this->logger
         ->error('An error ocurred while processing: ' . $e->getMessage());
     }
@@ -230,34 +259,6 @@ class ImporterController extends ControllerBase {
     if ($sandbox['total']) {
       $context['finished'] = $sandbox['progress'] / $sandbox['total'];
     }
-  }
-
-  public function doImportBatch(int $process_limit, &$context) {
-    $sandbox = &$context['sandbox'];
-
-    if (empty($sandbox)) {
-      $sandbox = [
-        'progress' => 0,
-        'total'    => 100000
-      ];
-      $context['results']['queued'] = 0;
-    }
-
-    usleep(5000);
-    $sandbox['progress'] += 100;
-
-    $context['message'] = '<h2>' . $this->t('Importing data...') . '</h2>';
-    $context['message'] .= $this->t('Processed @c/@r rows.', [
-      '@c' => $sandbox['progress'],
-      '@r' => $sandbox['total'],
-    ]);
-
-    if ($sandbox['total']) {
-      $context['finished'] = $sandbox['progress'] / $sandbox['total'];
-    }
-
-    $this->messenger()
-      ->addMessage($process_limit);
   }
 
   /**
@@ -298,5 +299,124 @@ class ImporterController extends ControllerBase {
           ]
         )
       );
+  }
+
+  protected function getContentViaUrl($url, $limit = 2000000) {
+    if(strpos($url, "http") !== 0) {
+      $url = "https://" . $url;
+    }
+    $url = trim($url);
+    $domain_params = parse_url($url);
+    if(!isset($domain_params['path'])) {
+      $domain_params['path'] = '';
+    }
+  
+    $content = "";
+  
+    try {
+      $client = new Client([
+        'timeout' => 5,
+      ]);
+      $response = $client->get($url, array(
+        'read_timeout' => 5,
+      ));
+  
+      $body = $response->getBody();
+      $content = $body->read($limit);
+    }
+    catch (\Exception $e) {
+      $this->logger
+        ->error(
+          $this->t('Error while fetching content: @err', [
+            '@err' => $e->getMessage()
+          ])
+        );
+    }
+  
+    return $content;
+  }
+
+  protected function fetchBodyFromUrl($url) {
+    try {
+      $raw_content = $this->getContentViaUrl($url);
+      $crawler = new Crawler($raw_content);
+      $articles = $crawler->filter('article');
+      $article_nodes = $articles->filter('div.entry-content');
+
+      return $article_nodes->html();
+    }
+    catch (\Exception $e) {
+      $this->logger
+        ->error(
+          $this->t('Error while fetching content: @err', [
+            '@err' => $e->getMessage()
+          ])
+        );
+      return NULL;
+    }
+  }
+
+  public function test() {
+    $wp_post_url = 'http://arc.parracity.nsw.gov.au/blog/2017/02/03/cambria-hall-a-hidden-cornerstone-of-epping-history';
+    $raw_content = $this->getContentViaUrl($wp_post_url);
+    $crawler  = new Crawler($raw_content);
+    $articles = $crawler->filter('article');
+    $article_filtered = $articles->filter('div.entry-content > p,blockquote');
+
+    $img_elems = $article_filtered->filter('img');
+
+    $img_elems
+      ->each(function (Crawler $node, $i) {
+        $dom_elem = $node->getNode(0);
+        # Fetch the image
+        // srcset should have higher priority
+        $img_source = $node->attr('srcset');
+        if (!empty($img_source)) {
+          /** Match structure:
+           *  [
+           *    0 => https://example.com/wp-content/uploads/2016/02/logo-home.png 793w
+           *    1 => png
+           *    2 => 793
+           * ]
+          */
+          preg_match_all('/[^"\'=\s]+\.(jpe?g|png|gif) ([0-9]*)w/', $img_source, $matches, PREG_SET_ORDER);
+          // Only use the largest file from srcset
+          usort ($matches, function ($x, $y) {
+            return $x[2] < $y[2];	
+          });
+          $img_source = explode(" ", $matches[0][0]);
+          $img_source = $img_source[0];
+          $img_source = trim($img_source);
+        }
+
+        if (empty($img_source)) {
+          $img_source = $node->attr('src');
+        }
+
+        $path = parse_url($img_source, PHP_URL_PATH); 
+        $img_name = basename($path);
+
+        if (!empty($img_source)) {
+          $directory = 'public://article-images/';
+          $this->fileSystem
+            ->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+
+          $image_file = system_retrieve_file($img_source, $directory . $img_name, TRUE, FILE_EXISTS_REPLACE);
+          if ($image_file) {
+            $dom_elem->removeAttribute('srcset');
+            $dom_elem->setAttribute('src', $image_file->url());
+          }
+        }
+      });
+
+    $html = '';
+    foreach ($article_filtered as $element) {
+      $html .= $element->ownerDocument->saveHTML($element);
+    };
+    // echo $html;  exit;
+
+    return [
+      '#markup' => $html
+    ];
   }
 }

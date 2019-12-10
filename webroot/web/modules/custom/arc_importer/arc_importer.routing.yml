@@ -7,3 +7,11 @@ arc_importer.import:
     _permission: 'administer site import'
   options:
     _admin_route: TRUE
+
+arc_importer.test:
+  path: '/test'
+  defaults:
+    _controller: '\Drupal\arc_importer\Controller\ImporterController::test'
+    title: ARC Importer
+  requirements:
+    _permission: 'access content'
