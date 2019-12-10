@@ -10,8 +10,8 @@ dependencies:
     - arc
 id: views_block__banner_image_for_volcabulary_term_block_1
 theme: arc
-region: section_slideshow
-weight: -19
+region: header
+weight: -20
 provider: null
 plugin: 'views_block:banner_image_for_volcabulary_term-block_1'
 settings:

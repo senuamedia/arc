@@ -12,7 +12,7 @@ dependencies:
 id: makinganoffer
 theme: arc
 region: content
-weight: -9
+weight: -7
 provider: null
 plugin: 'block_content:5bf60601-06e4-4ff4-ab70-fa905f20f64a'
 settings:

@@ -1,31 +1,37 @@
-uuid: 10c71ec0-8591-45b6-9978-dd1a8de74fd2
+uuid: d7b0947b-3894-40b7-a187-54588ca741c3
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.media.photography_collections
     - field.field.media.video.field_media_video_file
     - media.type.video
   module:
     - file
+    - layout_builder
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
 _core:
   default_config_hash: dQR0mYK5NNg27OigHrxZrHSsnwewnNZcPJKjKIO0cpA
-id: media.video.default
+id: media.video.photography_collections
 targetEntityType: media
 bundle: video
-mode: default
+mode: photography_collections
 content:
   field_media_video_file:
     type: file_video
     weight: 0
     label: hidden
     settings:
-      muted: false
-      width: 640
-      height: 480
       controls: true
+      multiple_file_display_type: tags
+      width: 250
+      height: 250
       autoplay: false
       loop: false
-      multiple_file_display_type: tags
+      muted: false
     third_party_settings: {  }
     region: content
 hidden:

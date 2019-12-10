@@ -1,0 +1,10 @@
+uuid: 654dcf3c-a423-4f55-99a7-da605ac6aed5
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.photography_collections
+label: 'Photography collections'
+targetEntityType: media
+cache: true

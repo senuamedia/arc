@@ -1,22 +1,22 @@
-uuid: 91388924-3e75-47a3-8a29-ca516995fa50
+uuid: 3eed8cc8-a449-4b63-b627-642cd5da9678
 langcode: en
 status: true
 dependencies:
   config:
-    - views.view.banner_contact
+    - views.view.thumbnail_of_collections
   module:
     - system
     - views
   theme:
     - arc
-id: views_block__banner_contact_block_1
+id: views_block__thumbnail_of_collections_block_1
 theme: arc
-region: header
-weight: 0
+region: content
+weight: -19
 provider: null
-plugin: 'views_block:banner_contact-block_1'
+plugin: 'views_block:thumbnail_of_collections-block_1'
 settings:
-  id: 'views_block:banner_contact-block_1'
+  id: 'views_block:thumbnail_of_collections-block_1'
   label: ''
   provider: views
   label_display: '0'
@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/contact\r\n/enquiries\r\n/what-on\r\n/donation-form\r\n/volunteer"
+    pages: /collections
     negate: false
     context_mapping: {  }

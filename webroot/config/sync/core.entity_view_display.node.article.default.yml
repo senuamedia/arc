@@ -6,20 +6,22 @@ dependencies:
     - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.field_audios
-    - field.field.node.article.field_banner
     - field.field.node.article.field_category_1
     - field.field.node.article.field_category_2
     - field.field.node.article.field_category_3
+    - field.field.node.article.field_detail
     - field.field.node.article.field_hero_image
     - field.field.node.article.field_image
     - field.field.node.article.field_link
     - field.field.node.article.field_photos
     - field.field.node.article.field_references
     - field.field.node.article.field_sample_content
+    - field.field.node.article.field_summary
     - field.field.node.article.field_tags
     - field.field.node.article.field_videos
     - node.type.article
   module:
+    - entity_reference_revisions
     - text
     - user
 _core:
@@ -33,9 +35,9 @@ content:
     type: text_default
     weight: 0
     region: content
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    label: hidden
   field_audios:
     type: entity_reference_entity_view
     weight: 3
@@ -43,6 +45,15 @@ content:
     settings:
       view_mode: default
       link: false
+    third_party_settings: {  }
+    region: content
+  field_detail:
+    type: entity_reference_revisions_entity_view
+    weight: 5
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
     third_party_settings: {  }
     region: content
   field_photos:
@@ -72,7 +83,6 @@ content:
     region: content
 hidden:
   comment: true
-  field_banner: true
   field_category_1: true
   field_category_2: true
   field_category_3: true
@@ -80,5 +90,6 @@ hidden:
   field_image: true
   field_link: true
   field_sample_content: true
+  field_summary: true
   field_tags: true
   links: true

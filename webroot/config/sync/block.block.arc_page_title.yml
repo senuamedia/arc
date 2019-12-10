@@ -1,6 +1,6 @@
 uuid: 4d6df195-3ace-4d22-a8dd-3e46d9f64c8c
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - ctools
@@ -12,7 +12,7 @@ _core:
 id: arc_page_title
 theme: arc
 region: header
-weight: -16
+weight: -17
 provider: null
 plugin: page_title_block
 settings:
@@ -23,7 +23,7 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "<front>\r\n/contact\r\n/enquiries\r\n/what-on\r\n/donation-form\r\n/volunteer"
+    pages: "<front>\r\n/*"
     negate: true
     context_mapping: {  }
   'entity_bundle:node':

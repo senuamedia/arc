@@ -1,0 +1,34 @@
+uuid: 6e0d3de7-7af8-42a4-9e58-e78da385ae23
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_detail
+    - node.type.article
+    - paragraphs.paragraphs_type.topic
+  module:
+    - entity_reference_revisions
+id: node.article.field_detail
+field_name: field_detail
+entity_type: node
+bundle: article
+label: Detail
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      topic: topic
+    target_bundles_drag_drop:
+      from_library:
+        weight: 3
+        enabled: false
+      topic:
+        enabled: true
+        weight: 4
+field_type: entity_reference_revisions

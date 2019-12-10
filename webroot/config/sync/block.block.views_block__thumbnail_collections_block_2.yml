@@ -1,22 +1,22 @@
-uuid: d605a74b-d0c6-4e44-b5c3-d77fd2424734
+uuid: d34e94d7-2fea-4131-8f0e-9ad15edacdad
 langcode: en
 status: true
 dependencies:
   config:
-    - views.view.photography_collection
+    - views.view.thumbnail_collections
   module:
     - system
     - views
   theme:
     - arc
-id: views_block__photography_collection_block_1
+id: views_block__thumbnail_collections_block_2
 theme: arc
 region: content
-weight: -22
+weight: -18
 provider: null
-plugin: 'views_block:photography_collection-block_1'
+plugin: 'views_block:thumbnail_collections-block_2'
 settings:
-  id: 'views_block:photography_collection-block_1'
+  id: 'views_block:thumbnail_collections-block_2'
   label: ''
   provider: views
   label_display: '0'
@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: /volcabulary/categories/photography-collections
+    pages: /photography-video-sound-collections
     negate: false
     context_mapping: {  }

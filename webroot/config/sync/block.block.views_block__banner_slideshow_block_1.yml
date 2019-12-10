@@ -12,7 +12,7 @@ dependencies:
 id: views_block__banner_slideshow_block_1
 theme: arc
 region: section_slideshow
-weight: -17
+weight: -22
 provider: null
 plugin: 'views_block:banner_slideshow-block_1'
 settings:
