@@ -11,7 +11,7 @@ dependencies:
 id: followus
 theme: arc
 region: footer
-weight: -9
+weight: -20
 provider: null
 plugin: 'block_content:cfbd3571-7973-498d-8d12-0dd3ddb23800'
 settings:

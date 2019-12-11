@@ -1,0 +1,23 @@
+uuid: fc2ede2e-18c2-439f-81ae-544f879610e3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_link
+    - taxonomy.vocabulary.category_group
+  module:
+    - link
+id: taxonomy_term.category_group.field_link
+field_name: field_link
+entity_type: taxonomy_term
+bundle: category_group
+label: Link
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

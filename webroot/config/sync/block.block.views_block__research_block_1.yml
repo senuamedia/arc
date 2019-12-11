@@ -1,4 +1,4 @@
-uuid: 38b8c53b-0b74-4cf9-88fa-be6f92d1549b
+uuid: 4364256e-b9a4-4d32-97b5-53701a15ff03
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
 id: views_block__research_block_1
 theme: arc
 region: content
-weight: -6
+weight: -3
 provider: null
 plugin: 'views_block:research-block_1'
 settings:
@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: /arc/home-page
+    pages: '<front>'
     negate: false
     context_mapping: {  }

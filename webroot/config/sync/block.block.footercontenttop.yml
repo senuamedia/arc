@@ -10,8 +10,8 @@ dependencies:
     - arc
 id: footercontenttop
 theme: arc
-region: footer_top
-weight: -9
+region: footer
+weight: -22
 provider: null
 plugin: 'block_content:d2d5b406-1769-4fb8-b11b-0552f7f58c10'
 settings:

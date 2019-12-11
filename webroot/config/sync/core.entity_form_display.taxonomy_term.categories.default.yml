@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.categories.field_hero_image
+    - field.field.taxonomy_term.categories.field_link
     - field.field.taxonomy_term.categories.field_thumbnail
     - image.style.thumbnail
     - taxonomy.vocabulary.categories
@@ -11,6 +12,7 @@ dependencies:
     - field_layout
     - image
     - layout_discovery
+    - link
     - path
     - text
 third_party_settings:
@@ -37,6 +39,14 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
+    region: content
+  field_link:
+    weight: 33
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
     region: content
   field_thumbnail:
     weight: 32

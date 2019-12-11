@@ -1,0 +1,30 @@
+uuid: dc5bee44-d8d3-43cc-b1cb-af8290b3b64d
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.resources_for
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__resources_for_block_1
+theme: arc
+region: content
+weight: -7
+provider: null
+plugin: 'views_block:resources_for-block_1'
+settings:
+  id: 'views_block:resources_for-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /what-we-do
+    negate: false
+    context_mapping: {  }

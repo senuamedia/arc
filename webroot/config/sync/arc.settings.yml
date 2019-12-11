@@ -7,7 +7,7 @@ _core:
 favicon:
   mimetype: image/vnd.microsoft.icon
   path: ''
-  url: 'http://arc.local/themes/custom/arc/favicon.ico'
+  url: 'http://arc-dev.senuamedia.com/themes/custom/arc/favicon.ico'
   use_default: true
 features:
   comment_user_picture: false
@@ -15,7 +15,7 @@ features:
   favicon: true
   node_user_picture: false
 logo:
-  path: 'public://Blog-logo-heading1.png'
+  path: 'public://logo.png'
   url: ''
   use_default: false
 table_responsive: '-1'
@@ -30,12 +30,14 @@ breadcrumb_home: 1
 region_wells:
   navigation: ''
   navigation_collapsible: ''
+  section_slideshow: ''
   header: ''
   highlighted: ''
   help: ''
   content: ''
   sidebar_first: ''
   sidebar_second: ''
+  footer_top: ''
   footer: ''
+  footer_bottom: ''
 navbar_position: fixed-top
-navbar_inverse: 0

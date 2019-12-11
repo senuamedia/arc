@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.node.sound.body
     - field.field.node.sound.field_image
-    - field.field.node.sound.field_media_type
     - field.field.node.sound.field_medias
     - image.style.thumbnail
     - node.type.sound
@@ -46,15 +45,6 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
-    region: content
-  field_media_type:
-    weight: 124
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
     region: content
   field_medias:
     weight: 125
