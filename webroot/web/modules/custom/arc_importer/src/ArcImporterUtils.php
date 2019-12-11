@@ -45,9 +45,13 @@ class ArcImporterUtils extends ServiceProviderBase {
 
   public function loadTermByName($term_name, $vocabulary = 'all') {
     if (!empty($term_name)) {
+      $props['name'] = $term_name;
+      if ($vocabulary !== 'all') {
+        $props['vid'] = $vocabulary;
+      }
       $term = $this->entityTypeManager()
         ->getStorage('taxonomy_term')
-        ->loadByProperties(['name' => $term_name]);
+        ->loadByProperties($props);
 
         // \Drupal::logger('Acr')->warning("term loaded: " . $term_name);
     }

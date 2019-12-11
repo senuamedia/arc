@@ -16,6 +16,8 @@ use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 
 use GuzzleHttp\Client;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -95,7 +97,8 @@ class ImporterController extends ControllerBase {
 
   /**
    * @param int $file_id The fid of the import file
-   * @return mixed Spreadsheet on success, NULL on failure
+   * @return \PhpOffice\PhpSpreadsheet\Spreadsheet|NULL
+   *   Spreadsheet on success, NULL on failure
    */
   private function getSheetFromFileID($file_id) {
     try {
@@ -104,7 +107,7 @@ class ImporterController extends ControllerBase {
         ->getViaUri($file->getFileUri())
         ->realpath();
 
-      $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file_path);
+      $spreadsheet = IOFactory::load($file_path);
     }
     catch (\Exception $e) {
       $this->logger()
@@ -133,7 +136,7 @@ class ImporterController extends ControllerBase {
           [$this, 'doProcessBatch'],
           [
             $file_id,
-            5
+            10
           ],
         ]
       ],
@@ -161,10 +164,17 @@ class ImporterController extends ControllerBase {
     // H and up: Ignore
 
     if (empty($sandbox)) {
-      $spreadsheet = $this->getSheetFromFileID($file_id);
-      $raw_data    = $spreadsheet
-        ->getSheetByName('3. New category mapping')
-        ->toArray(null, true, true, true);
+      try {
+        $spreadsheet = $this->getSheetFromFileID($file_id);
+        $raw_data    = $spreadsheet
+          ->getSheetByName('3. New category mapping')
+          ->toArray(null, false, false, true);
+          // ->toArray(null, true, true, true);
+      }
+      catch (\Exception $e) {
+        $this->logger
+          ->error('An error ocurred while processing: ' . $e->getMessage());
+      }
 
       $sandbox = [
         'raw_data' => $raw_data,
@@ -214,11 +224,13 @@ class ImporterController extends ControllerBase {
         // If there is sub-category to set
         if (!empty($row_data['G'])) {
           $parent = $row_data['F'];
+          $child  = $row_data['G'];
           for ($_fid = 1; $_fid <= 3; $_fid++) {
             if ($check = $node->{"field_category_{$_fid}"}) {
               if ($parent == $check->getString()) {
                 \Drupal::logger("arc")
                   ->warning("Parent match at: " . $_fid);
+                $node->set("field_category_{$_fid}", $arc_utils->loadTermByName($child));
               }
             }
           }
@@ -327,69 +339,125 @@ class ImporterController extends ControllerBase {
     catch (\Exception $e) {
       $this->logger
         ->error(
-          $this->t('Error while fetching content: @err', [
+          $this->t('Error while fetching url @url: @err', [
+            '@url' => $url,
             '@err' => $e->getMessage()
           ])
         );
+      return NULL;
     }
   
     return $content;
   }
 
+  protected function processImgTag(Crawler $node) {
+    # Fetch the image
+    // Priority: href (parent <a> node) > srcset > src
+    $img_source = $node->attr('srcset');
+
+    // if ($node->closest('a')) {}
+
+    if (!empty($img_source)) {
+      /**
+       * Match structure:
+       *  [
+       *    0 => https://example.com/wp-content/uploads/2016/02/logo-home.png 793w
+       *    1 => png
+       *    2 => 793
+       * ]
+      */
+      preg_match_all('/[^"\'=\s]+\.(jpe?g|png|gif) ([0-9]*)w/', $img_source, $matches, PREG_SET_ORDER);
+      // Only use the largest file from srcset
+      usort ($matches, function ($x, $y) {
+        return $x[2] < $y[2];	
+      });
+      $img_source = explode(" ", $matches[0][0]);
+      $img_source = $img_source[0];
+      $img_source = trim($img_source);
+    }
+
+    if (empty($img_source)) {
+      $img_source = $node->attr('src');
+    }
+
+    $path = parse_url($img_source, PHP_URL_PATH); 
+    $img_name = basename($path);
+
+    if (!empty($img_source)) {
+      $directory = 'public://article-images/';
+      $this->fileSystem
+        ->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+
+      $image_file = system_retrieve_file($img_source, $directory . $img_name, TRUE, FILE_EXISTS_REPLACE);
+      if ($image_file) {
+        $dom_elem = $node->getNode(0);
+        $dom_elem->removeAttribute('srcset');
+        $dom_elem->setAttribute('src', $image_file->url());
+      }
+    }
+  }
+
   protected function fetchBodyFromUrl($url) {
     try {
       $raw_content = $this->getContentViaUrl($url);
+      if (empty($raw_content)) {
+        return NULL;
+      }
+
       $crawler  = new Crawler($raw_content);
       $articles = $crawler->filter('article');
-      $article_filtered = $articles->filter('div.entry-content > p,blockquote');
+
+      // First meta is post header(date, feature image), second is post footer (comments, etc.)
+      $meta_filtered = $articles
+        ->filter('div.et_post_meta_wrapper')
+        ->first();
   
-      $img_elems = $article_filtered->filter('img');
-  
-      $img_elems
+      $meta_filtered->filter('img')
         ->each(function (Crawler $node, $i) {
-          $dom_elem = $node->getNode(0);
-          # Fetch the image
-          // srcset should have higher priority
-          $img_source = $node->attr('srcset');
-          if (!empty($img_source)) {
-            /** Match structure:
-             *  [
-             *    0 => https://example.com/wp-content/uploads/2016/02/logo-home.png 793w
-             *    1 => png
-             *    2 => 793
-             * ]
-            */
-            preg_match_all('/[^"\'=\s]+\.(jpe?g|png|gif) ([0-9]*)w/', $img_source, $matches, PREG_SET_ORDER);
-            // Only use the largest file from srcset
-            usort ($matches, function ($x, $y) {
-              return $x[2] < $y[2];	
-            });
-            $img_source = explode(" ", $matches[0][0]);
-            $img_source = $img_source[0];
-            $img_source = trim($img_source);
-          }
+          $this->processImgTag($node);
+        });
+
+      // Article content
+      $article_filtered = $articles->filter('div.entry-content > p,blockquote');
+      // ->children('p,blockquote');
   
-          if (empty($img_source)) {
-            $img_source = $node->attr('src');
-          }
-  
-          $path = parse_url($img_source, PHP_URL_PATH); 
-          $img_name = basename($path);
-  
-          if (!empty($img_source)) {
-            $directory = 'public://article-images/';
-            $this->fileSystem
-              ->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
-  
-            $image_file = system_retrieve_file($img_source, $directory . $img_name, TRUE, FILE_EXISTS_REPLACE);
-            if ($image_file) {
-              $dom_elem->removeAttribute('srcset');
-              $dom_elem->setAttribute('src', $image_file->url());
-            }
-          }
+      $article_filtered->filter('img')
+        ->each(function (Crawler $node, $i) {
+          $this->processImgTag($node);
         });
   
+      try {
+        $urls = $article_filtered
+          ->filter('a')
+          ->each(function (Crawler $node, $i) {
+            $url_from_child = $node
+              ->children('img')
+              ->attr('src');
+
+            if ($url_from_child) {
+              $node->getNode(0)
+                ->setAttribute('href', $url_from_child);
+            } else {
+
+            }
+            return $node->attr('href');
+          });
+        // print_r($urls);exit;
+      }
+      catch (\InvalidArgumentException $e) {
+        $this->logger
+          ->warning(
+            $this->t('An exeption throwed while fetching from @url: @err', [
+              '@url' => $url,
+              '@err' => $e->getMessage()
+            ])
+          );
+      }
+
       $html = '';
+      foreach ($meta_filtered as $element) {
+        $html .= $element->ownerDocument->saveHTML($element);
+      };
       foreach ($article_filtered as $element) {
         $html .= $element->ownerDocument->saveHTML($element);
       };
@@ -399,7 +467,8 @@ class ImporterController extends ControllerBase {
     catch (\Exception $e) {
       $this->logger
         ->error(
-          $this->t('Error while fetching content: @err', [
+          $this->t('Error while fetching from @url: @err', [
+            '@url' => $url,
             '@err' => $e->getMessage()
           ])
         );
@@ -408,10 +477,68 @@ class ImporterController extends ControllerBase {
   }
 
   public function test() {
-    $wp_post_url = 'http://arc.parracity.nsw.gov.au/blog/2017/02/03/cambria-hall-a-hidden-cornerstone-of-epping-history';
+    // $wp_post_url = 'http://arc.parracity.nsw.gov.au/blog/2017/02/03/cambria-hall-a-hidden-cornerstone-of-epping-history';
+    $wp_post_url = 'http://arc.parracity.nsw.gov.au/blog/2014/11/26/captain-henry-mance-the-prince-of-parramatta-river/';
 
     return [
       '#markup' => $this->fetchBodyFromUrl($wp_post_url)
+    ];
+  }
+
+  public function status() {
+    $header = [
+      'row' => [
+        'data'  => $this->t('Row'), 
+        'field' => 'row',
+        'specifier'  => 'row'
+        // 'sort'  => 'desc'
+      ],
+      'url' => [
+        'data'      => $this->t('Url'),
+        'type'      => 'link',
+        'field'     => 'url',
+        // 'specifier' => 'url'
+      ],
+      'status' => [
+        'data'      => $this->t('Status'),
+        'field'     => 'status',
+        'specifier' => 'status'
+      ],
+      'message' => [
+        'data'      => $this->t('Message'),
+        'field'     => 'message',
+        'specifier' => 'message'
+      ]
+    ];
+  
+    $results = $this->database
+      ->select('arc_importer_articles', 'arc')
+      ->fields('arc')
+      // ->sort('row', 'DESC')
+      ->range(1, 50)
+      ->execute();
+
+    $data = [];
+    foreach ($results as $id => $row) {
+      $data[] = [
+        $row->row,
+        $row->url,
+        $row->status,
+        $row->message
+      ];
+    }
+
+    return [
+      'results' => [
+        '#type'    => 'table',
+        '#caption' => $this->t('Importing Status'),
+        '#header'  => $header,
+        '#rows'    => $data,
+        '#empty'   => $this->t('No data found.'),
+      ],
+      // 'pager' => [
+      //   '#type' => 'pager',
+      // ],
     ];
   }
 }
