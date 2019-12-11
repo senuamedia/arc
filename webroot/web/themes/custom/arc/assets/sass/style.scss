@@ -1,0 +1,33 @@
+/*------------------------------------------------------------------
+CSS
+-------------------------------------------------------------------*/
+
+// Core variables and mixins
+// @import "config/variables";
+// @import "config/mixins";
+
+
+// ====================
+// Skins
+// Please enable when using skins theme
+// ---
+// @import "base/skin";  
+
+
+// Base
+// @import "base/base";
+// @import "base/elements";
+
+// 
+// ====================
+// Drupal Component
+// Please enable when using Drupal
+// ---
+// @import "config/reset";
+
+// Partials
+@import "partials/view";
+@import "partials/block";
+@import "partials/page";
+@import "partials/responsive";
+@import "partials/print";

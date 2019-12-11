@@ -1,0 +1,29 @@
+/*=====Banner What we do=====*/
+.banner-what-we-do {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: #000;
+        opacity: 0.3;
+    }
+    .views-field-nothing {
+        position: absolute;
+        font-size: 33px;
+        line-height: 40px;
+        color: #fff;
+        top: 50px;
+        left: 115px;
+        max-width: 600px;
+    }
+    .views-field-field-hero-image {
+        img {
+            max-height: 210px;
+            object-fit: cover;
+        }
+    }
+}

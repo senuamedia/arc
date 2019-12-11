@@ -1,0 +1,138 @@
+.main-container.container {
+	max-width: 1200px;
+	width: 100%;
+}
+/*=====Header=====*/
+.container {
+	padding: 0;
+	width: 1200px;
+}
+.navbar-collapse.collapse  {
+	padding-bottom: 100px;
+	position: relative;
+	#block-searchheader {
+		position: absolute;
+		width: 100%;
+		bottom: 20px;
+	}
+	.block-search-header {
+		display: flex;
+		.search-show,
+		.search-text {
+			height: 60px;
+			color: #706e6e;
+			>* {
+				height: 60px;
+			}
+		}
+		.search-show {
+			margin-right: 28px;
+			width: 570px;
+			position: relative;
+			display: flex;
+			input {
+				min-width: 570px;
+				border: 1px solid rgb(219, 219, 219);
+				box-shadow: none;
+				padding-left: 20px;
+				font-size: 14px;
+			}
+			button {
+				background: rgb(163, 109, 47);
+				border: 1px solid rgb(163, 109, 47);
+				box-shadow: none;
+				font-size: 0;
+				position: absolute;
+				width: 60px;
+				top: 0;
+				right: 0;
+			}
+		}
+		.search-text {
+			min-width: 278px;
+			margin-right: 15px;
+			background: rgb(237, 237, 220);
+			p {
+				padding: 23px 15px;
+				font-size: 14px;
+				line-height: 1;
+			}
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+/*=====Footer=====*/
+.footer {
+	background: #333;
+	.container {
+		padding: 0;
+	}
+	.region-footer {
+		display: flex;
+		flex-wrap: wrap;
+		#block-footercontenttop {
+			max-width: 100%;
+			flex: 0 0 100%;
+			font-size: 16px;
+			line-height: 20px;
+			font-weight: bold;
+			margin-bottom: 100px;
+			p {
+				margin-bottom: 0;
+			}
+		}
+		#block-footer {
+			max-width: 33.333%;
+			flex: 0 0 33.333%;
+			li {
+				margin-bottom: 10px;
+				font-size: 16px;
+				line-height: 19px;
+				a {
+					color: #f7f7f7;
+					padding: 0;
+					&:hover {
+						background-color: transparent;
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+		#block-followus {
+			max-width: 33.333%;
+			flex: 0 0 33.333%;
+			h2 {
+				margin-top: 0;
+				font-size: 18px;
+				line-height: 22px;
+				color: #fff;
+				font-weight: normal;
+			}
+			ul {
+				margin: 0;
+				padding: 0;
+				li {
+					list-style: none;
+					/* &:first-child {
+						background: url('../images/icon-fb.svg');
+					}*/
+				}
+			}
+		}
+	}
+}
+.region-footer-bottom {
+	background: #2b2b27;
+	#block-producedbycityofparramatta {
+		max-width: 1200px;
+		margin: 0 auto;
+		p {
+			padding: 20px 15px;
+			font-size: 18px;
+			color: #fff;
+			line-height: 23px;
+		}
+	}
+}
