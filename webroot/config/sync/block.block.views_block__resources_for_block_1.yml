@@ -12,7 +12,7 @@ dependencies:
 id: views_block__resources_for_block_1
 theme: arc
 region: content
-weight: -7
+weight: -9
 provider: null
 plugin: 'views_block:resources_for-block_1'
 settings:

@@ -11,7 +11,7 @@ dependencies:
     - arc
 id: views_block__banner_image_block_1
 theme: arc
-region: header
+region: banner
 weight: -19
 provider: null
 plugin: 'views_block:banner_image-block_1'

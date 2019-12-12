@@ -11,8 +11,8 @@ dependencies:
     - arc
 id: views_block__slideshow_block_1
 theme: arc
-region: section_slideshow
-weight: -20
+region: slideshow
+weight: -23
 provider: null
 plugin: 'views_block:slideshow-block_1'
 settings:

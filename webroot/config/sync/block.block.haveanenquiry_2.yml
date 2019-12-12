@@ -11,8 +11,8 @@ dependencies:
     - arc
 id: haveanenquiry_2
 theme: arc
-region: content
-weight: -5
+region: content_bottom
+weight: -8
 provider: null
 plugin: 'block_content:da47ec0b-1fff-45ab-b359-ea2bdf5d8ade'
 settings:

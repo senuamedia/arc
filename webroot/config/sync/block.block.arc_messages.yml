@@ -1,6 +1,6 @@
 uuid: 1bc2c996-3523-46ba-8f9b-da2a2c6680f8
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - system
@@ -11,7 +11,7 @@ _core:
 id: arc_messages
 theme: arc
 region: header
-weight: -16
+weight: -23
 provider: null
 plugin: system_messages_block
 settings:

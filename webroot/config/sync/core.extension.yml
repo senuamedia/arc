@@ -55,8 +55,12 @@ module:
   rdf: 0
   responsive_image: 0
   search: 0
+  search_api: 0
+  search_api_db: 0
+  search_api_db_defaults: 0
   serialization: 0
   shortcut: 0
+  simplenews: 0
   statistics: 0
   syslog: 0
   system: 0

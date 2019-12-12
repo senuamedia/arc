@@ -9,7 +9,7 @@ _core:
 id: arc_local_tasks
 theme: arc
 region: header
-weight: -15
+weight: -21
 provider: null
 plugin: local_tasks_block
 settings:

@@ -389,6 +389,7 @@ display:
           plugin_id: standard
       arguments: {  }
       display_extenders: {  }
+      css_class: highlights-home-page
     cache_metadata:
       max-age: -1
       contexts:

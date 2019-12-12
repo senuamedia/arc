@@ -1,0 +1,31 @@
+uuid: bb89d8b2-feac-42b2-86d2-8e8b68d97ffa
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.arc_paragraph_single
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__arc_paragraph_single_block_1
+theme: arc
+region: content_highlight
+weight: -23
+provider: null
+plugin: 'views_block:arc_paragraph_single-block_1'
+settings:
+  id: 'views_block:arc_paragraph_single-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: /what-we-do
+    negate: false
+    context_mapping: {  }

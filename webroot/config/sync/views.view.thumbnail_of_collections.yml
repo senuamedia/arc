@@ -3,11 +3,13 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.taxonomy_term.field_link
     - field.storage.taxonomy_term.field_thumbnail
     - image.style.image_277x277
     - taxonomy.vocabulary.categories
   module:
     - image
+    - link
     - taxonomy
     - user
 id: thumbnail_of_collections
@@ -60,15 +62,15 @@ display:
       row:
         type: fields
       fields:
-        field_thumbnail:
-          id: field_thumbnail
-          table: taxonomy_term__field_thumbnail
-          field: field_thumbnail
+        field_link:
+          id: field_link
+          table: taxonomy_term__field_link
+          field: field_link
           relationship: none
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -108,11 +110,78 @@ display:
           hide_empty: true
           empty_zero: false
           hide_alter_empty: true
+          click_sort_column: uri
+          type: link
+          settings:
+            trim_length: 80
+            url_only: false
+            url_plain: false
+            rel: '0'
+            target: '0'
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        field_thumbnail:
+          id: field_thumbnail
+          table: taxonomy_term__field_thumbnail
+          field: field_thumbnail
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: true
+            path: '{{ field_link }}'
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: true
+          empty_zero: false
+          hide_alter_empty: true
           click_sort_column: target_id
           type: image
           settings:
             image_style: image_277x277
-            image_link: content
+            image_link: ''
           group_column: ''
           group_columns: {  }
           group_rows: true
@@ -128,39 +197,54 @@ display:
           id: name
           table: taxonomy_term_field_data
           field: name
-          entity_type: taxonomy_term
-          entity_field: name
-          label: ''
-          alter:
-            alter_text: false
-            make_link: false
-            absolute: false
-            trim: false
-            word_boundary: false
-            ellipsis: false
-            strip_tags: false
-            html: false
-          hide_empty: false
-          empty_zero: false
-          type: string
-          settings:
-            link_to_entity: true
-          plugin_id: term_name
           relationship: none
           group_type: group
           admin_label: ''
+          label: ''
           exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: true
+            path: '{{ field_link }}'
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: false
+            ellipsis: false
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
           element_type: ''
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
+          hide_empty: true
+          empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -172,6 +256,9 @@ display:
           separator: ', '
           field_api_classes: false
           convert_spaces: false
+          entity_type: taxonomy_term
+          entity_field: name
+          plugin_id: term_name
       filters:
         status:
           value: '1'
@@ -370,6 +457,7 @@ display:
         - 'languages:language_interface'
         - user.permissions
       tags:
+        - 'config:field.storage.taxonomy_term.field_link'
         - 'config:field.storage.taxonomy_term.field_thumbnail'
   block_1:
     display_plugin: block
@@ -385,4 +473,5 @@ display:
         - 'languages:language_interface'
         - user.permissions
       tags:
+        - 'config:field.storage.taxonomy_term.field_link'
         - 'config:field.storage.taxonomy_term.field_thumbnail'

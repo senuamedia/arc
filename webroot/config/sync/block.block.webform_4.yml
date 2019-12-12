@@ -11,8 +11,8 @@ dependencies:
     - arc
 id: webform_4
 theme: arc
-region: content
-weight: -17
+region: content_highlight
+weight: -21
 provider: null
 plugin: webform_block
 settings:

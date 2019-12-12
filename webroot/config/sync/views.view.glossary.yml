@@ -2,8 +2,6 @@ uuid: 4664a28c-7a4a-43e5-89c5-1edb7908b31a
 langcode: en
 status: true
 dependencies:
-  config:
-    - system.menu.main
   module:
     - node
     - user
@@ -441,11 +439,14 @@ display:
         options: {  }
       path: glossary
       menu:
-        type: normal
+        type: none
         title: Glossary
-        weight: 0
-        menu_name: main
+        description: ''
+        expanded: false
         parent: ''
+        weight: 0
+        context: '0'
+        menu_name: main
       display_extenders: {  }
     cache_metadata:
       contexts:

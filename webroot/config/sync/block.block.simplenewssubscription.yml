@@ -1,0 +1,24 @@
+uuid: 86809b78-ced0-40b1-9295-d7eefdd8be84
+langcode: en
+status: true
+dependencies:
+  module:
+    - simplenews
+  theme:
+    - arc
+id: simplenewssubscription
+theme: arc
+region: footer
+weight: -20
+provider: null
+plugin: simplenews_subscription_block
+settings:
+  id: simplenews_subscription_block
+  label: 'Notify me via Email'
+  provider: simplenews
+  label_display: visible
+  newsletters:
+    notify_me_via_email: notify_me_via_email
+  message: 'Enter your email address to receive notifications of new posts by email.'
+  unique_id: 881261e0-f294-492d-9295-74f67bcbb8f5
+visibility: {  }

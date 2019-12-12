@@ -330,10 +330,10 @@ display:
           entity_type: taxonomy_term
           entity_field: description
           plugin_id: field
-        nothing:
-          id: nothing
-          table: views
-          field: nothing
+        field_link_1:
+          id: field_link_1
+          table: taxonomy_term__field_link
+          field: field_link
           relationship: none
           group_type: group
           admin_label: ''
@@ -341,9 +341,9 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{ field_link }}'
-            make_link: false
-            path: ''
+            text: 'Lorem ipsum >'
+            make_link: true
+            path: '{{ field_link }}'
             absolute: false
             external: false
             replace_spaces: false
@@ -375,10 +375,28 @@ display:
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
-          hide_empty: false
+          hide_empty: true
           empty_zero: false
-          hide_alter_empty: false
-          plugin_id: custom
+          hide_alter_empty: true
+          click_sort_column: uri
+          type: link
+          settings:
+            trim_length: 80
+            url_only: false
+            url_plain: false
+            rel: '0'
+            target: '0'
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       filters:
         status:
           value: '1'
@@ -501,6 +519,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
+      css_class: resources-for-what-we-do
     cache_metadata:
       max-age: -1
       contexts:

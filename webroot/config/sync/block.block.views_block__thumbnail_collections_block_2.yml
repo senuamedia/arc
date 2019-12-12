@@ -12,7 +12,7 @@ dependencies:
 id: views_block__thumbnail_collections_block_2
 theme: arc
 region: content
-weight: -19
+weight: -23
 provider: null
 plugin: 'views_block:thumbnail_collections-block_2'
 settings:

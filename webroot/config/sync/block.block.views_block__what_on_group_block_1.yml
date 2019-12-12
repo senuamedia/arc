@@ -1,0 +1,30 @@
+uuid: ace3e2d8-f270-4ebf-ae94-957d56ed2ffa
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.what_on_group
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__what_on_group_block_1
+theme: arc
+region: content
+weight: -7
+provider: null
+plugin: 'views_block:what_on_group-block_1'
+settings:
+  id: 'views_block:what_on_group-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /what-on
+    negate: false
+    context_mapping: {  }

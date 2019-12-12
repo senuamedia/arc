@@ -10,8 +10,8 @@ _core:
   default_config_hash: wDR9JKEATSWldBjw8du8s3G2zjEYeQf88nlld11hMLo
 id: arc_breadcrumbs
 theme: arc
-region: header
-weight: -21
+region: top_bar
+weight: -23
 provider: null
 plugin: system_breadcrumb_block
 settings:

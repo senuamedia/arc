@@ -16,6 +16,7 @@ permissions:
   - 'post comments'
   - 'search content'
   - 'skip comment approval'
+  - 'subscribe to newsletters'
   - 'use text format basic_html'
   - 'view media'
   - 'view paragraph content topic'

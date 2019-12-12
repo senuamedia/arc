@@ -314,8 +314,8 @@ display:
           label: 'Canonical Url'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: "<a href={{ field_canonical_url }} target=\"_blank\">\r\n  {{ field_canonical_url }}\r\n</a>"
             make_link: false
             path: ''
             absolute: false

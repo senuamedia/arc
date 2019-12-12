@@ -1,0 +1,31 @@
+uuid: 8d7ac3af-6b5d-4e1c-b666-4913f097b9a5
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:d5b2afe4-a40e-490d-982b-9b2cf441f8ac'
+  module:
+    - block_content
+    - system
+  theme:
+    - arc
+id: partnerimage
+theme: arc
+region: content_bottom
+weight: -22
+provider: null
+plugin: 'block_content:d5b2afe4-a40e-490d-982b-9b2cf441f8ac'
+settings:
+  id: 'block_content:d5b2afe4-a40e-490d-982b-9b2cf441f8ac'
+  label: 'Partner image'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }
