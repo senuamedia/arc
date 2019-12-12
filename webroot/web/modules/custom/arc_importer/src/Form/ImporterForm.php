@@ -93,30 +93,59 @@ class ImporterForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    // $form['import_file'] = [
-    //   '#type'  => 'managed_file',
-    //   '#name'  => 'import_file',
-    //   '#title' => $this->t('Choose A File To Import'),
-    //   '#description' => $this->t('File contains data to import (only *.xlsx allowed)'),
-    //   // '#required'    => TRUE,
-    //   '#upload_validators' => [
-    //     'file_validate_extensions' => ['xlsx']
-    //   ],
-    //   '#upload_location' => 'public://import-files/',
+    $form_state->disableCache();
+
+    $form['import_file'] = [
+      '#type'  => 'managed_file',
+      '#name'  => 'import_file',
+      '#title' => $this->t('Choose A File To Import'),
+      '#description' => $this->t('File contains data to import (only *.xlsx allowed)'),
+      '#required'    => TRUE,
+      '#upload_validators' => [
+        'file_validate_extensions' => ['xlsx']
+      ],
+      '#upload_location' => 'public://import-files/',
+    ];
+    // $form['use_default_file'] = [
+    //   '#type' => 'checkbox',
+    //   '#title' => $this->t('Use default file (no upload)'),
     // ];
 
     $form['from'] = [
-      '#type'  => 'number',
-      '#title' => $this->t('From'),
-      '#default_value' => 5,
-      '#required' => TRUE,
+      '#type'  => 'select',
+      '#title' => $this->t('Run from'),
+      '#description' => $this->t('The row to start import from'),
+      '#options' => [
+        '-1'   => $this->t('All'),
+        '5'    => 5,
+        '100'  => 100,
+        '200'  => 200,
+        '500'  => 500,
+        '1000' => 1000,
+      ],
+      '#default_value' => '-1',
     ];
 
-    $form['to'] = [
-      '#type'  => 'number',
-      '#title' => $this->t('To'),
+    $form['limit'] = [
+      '#type'  => 'select',
+      '#title' => $this->t('Limit'),
+      '#description' => $this->t('Number of rows to import'),
       '#default_value' => 100,
-      '#required' => TRUE,
+      '#options' => [
+        '1'    => 1,
+        '50'   => 50,
+        '100'  => 100,
+        '200'  => 200,
+        '500'  => 500,
+        '1000' => 1000,
+      ],
+      '#states' => [
+        'invisible' => [
+          'select[name="from"]' => [
+            'value' => '-1'
+          ]
+        ],
+      ]
     ];
 
     $form['actions']['submit'] = [
@@ -131,34 +160,62 @@ class ImporterForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $module_path = drupal_get_path('module', 'arc_importer');
-    $import_file = $module_path . '/assets/main_import_file.xlsx';
-    $spreadsheet = $this->getSheet($import_file);
+    // $module_path = drupal_get_path('module', 'arc_importer');
+    // // $import_file = $module_path . '/assets/main_import_file.xlsx';
+    // $import_file = $module_path . '/assets/main_import_file_fixed.xlsx';
+    // $spreadsheet = $this->getSheet($import_file);
+
+    $import_file_ids = $form_state->getValue('import_file', '');
+
+    if (empty($import_file_ids) || empty($import_file_ids[0])) {
+      $this->messenger()
+        ->addError('Please choose a file to import!');
+      return;
+    }
+
+    $fid = reset($import_file_ids);
+    $spreadsheet = $this->getSheetFromFileID($fid);
+
     $content_data = $spreadsheet
       ->getSheetByName('3. New category mapping')
-      ->toArray(null, false, false, true);
+      ->toArray(null, true, false, true);
 
     try {
-      // $current = $this->database
-      //   ->select('arc_importer_articles', 'arc')
-      //   ->fields('arc')
-      //   ->sort('row', 'DESC')
-      //   ->range(0, 1)
-      //   ->execute();
-
-      $_from = $form_state->getValue('from', 5);
-      $_to   = $form_state->getValue('to', 100);
-
-      if ($_from < 5) {
+      $from = $form_state->getValue('from', '-1');
+      if ($from == '-1') {
         $_from = 5;
+        $_to   = count($content_data);
       }
-      if ($_to > 665) {
-        $_to = 665;
+      else {
+        $limit = $form_state->getValue('limit', 100);
+
+        $_from = $from;
+        $_to   = $from + $limit;
       }
+
+      // drupal_set_message("From $_from to $_to");return;
+
+      $imported_rows = $this->database
+        ->select('arc_importer_articles', 'arc')
+        ->fields('arc', ['row', 'status'])
+        ->condition('row', $_from, '>=')
+        ->condition('row', $_to, '<=')
+        ->condition('status', 1)
+        ->execute();
+
+      $imported_rows = $imported_rows
+        ->fetchCol(0);
+
+      // \Drupal::logger('arc')->warning("ignored: " . print_r($imported_rows, true));
 
       for ($index = $_from; $index <= $_to; $index++) {
         if (!isset($content_data[$index])) {
           break;
+        }
+
+        // Ignore successfully imported rows
+        if (in_array($index, $imported_rows)) {
+          continue;
         }
 
         $row_data = $content_data[$index];
@@ -171,22 +228,29 @@ class ImporterForm extends FormBase {
         $status  = 1;
         $message = '';
   
-        $arc_utils = \Drupal::service('arc_importer.utils');
-        $post_title = html_entity_decode($row_data['A']); // The spreadsheet data contains html entities
+        $arc_utils   = \Drupal::service('arc_importer.utils');
+        $post_title  = html_entity_decode($row_data['A']); // The spreadsheet data contains html entities
+        $wp_post_url = html_entity_decode($row_data['B']);
 
-        $node = Node::create([
-          'type'  => 'article',
-          'title' => $post_title,
-          'body'  => $row_data['B'], // for now use url as body
-          'field_category_1' => $arc_utils->loadTermByName($row_data['C'], 'categories'),
-          'field_category_2' => $arc_utils->loadTermByName($row_data['D'], 'categories'),
-          'field_category_3' => $arc_utils->loadTermByName($row_data['E'], 'categories'),
+        $nids = \Drupal::entityQuery('node')
+          ->condition('type', 'article')
+          ->condition('field_canonical_url', $wp_post_url)
+          ->execute();
 
-          // For now
-          // TODO: remove this
-          'field_sample_content' => TRUE,
-          'status' => 1
-        ]);
+        if ($nids) {
+          $node = Node::load(reset($nids));
+        } else {
+          $node = Node::create([
+            'type'  => 'article',
+            'title' => $post_title,
+            // TODO: remove this
+            'field_sample_content' => TRUE,
+            'status' => 1
+          ]);
+        }
+        $node->set("field_category_1", $arc_utils->loadTermByName($row_data['C'], 'categories'));
+        $node->set("field_category_2", $arc_utils->loadTermByName($row_data['D'], 'categories'));
+        $node->set("field_category_3", $arc_utils->loadTermByName($row_data['E'], 'categories'));
 
         // If there is sub-category to set
         if (!empty($row_data['G'])) {
@@ -202,7 +266,8 @@ class ImporterForm extends FormBase {
             $node->set("field_category_3", $arc_utils->loadTermByName($child, 'categories'));
           } 
         }
-        $wp_post_url = $row_data['B'];
+
+
         $node->set('field_canonical_url', $wp_post_url);
         // Set author to content_importer
         $node->setOwnerId(42);
@@ -218,7 +283,6 @@ class ImporterForm extends FormBase {
           $created = trim($content['created']);
           $created = implode("", explode(",", $created));
           $image = $content['image'];
-          // $body  = implode("\n", $content['body']);
           $body  = $content['body'];
 
           if (!empty($image)) {
@@ -231,8 +295,8 @@ class ImporterForm extends FormBase {
       
             $image_file = system_retrieve_file($image, $directory . $img_name, TRUE, FILE_EXISTS_REPLACE);
           }
-          // print_r($image_file->url());exit;
-          if ($image_file) {
+
+          if (isset($image_file) && $image_file) {
             $node->set('field_image', [
               'target_id' => $image_file->id(),
               'alt'   => $title,
@@ -240,13 +304,14 @@ class ImporterForm extends FormBase {
             ]);
           }
 
-          // $node->set('title', $title);
-          $node->set('created', strtotime($created));
+          $created_time = strtotime($created);
+          if ($created_time !== FALSE) {
+            $node->set('created', strtotime($created));
+          }
           $node->set('body', [
             'format' => 'full_html',
             'value'  => $body
           ]);
-
 
           $blog_path = parse_url($wp_post_url, PHP_URL_PATH);
           $blog_path = rtrim($blog_path, '/');
@@ -257,8 +322,6 @@ class ImporterForm extends FormBase {
           $node->set('path', [
             'pathauto' => FALSE,
             'alias' => $blog_path,
-            // 'pid' => 1,
-            // 'langcode' => 'en',
           ]);
           $node->save();
         }
@@ -273,7 +336,8 @@ class ImporterForm extends FormBase {
         }
 
         $this->database->merge('arc_importer_articles')
-          ->key(['node_id' => $node->id()])
+          // ->key(['node_id' => $node->id()])
+          ->key(['row' => $index])
           ->fields([
             'node_id' => $node->id(),
             'url'     => $wp_post_url,
@@ -294,32 +358,37 @@ class ImporterForm extends FormBase {
     $this->logger
       ->info("Successfully imported from {$_from} to {$_to}");
 
-    return;
-    // $import_file_ids = $form_state->getValue('import_file', '');
-
-    // if (empty($import_file_ids) || empty($import_file_ids[0])) {
-    //   $this->messenger()
-    //     ->addError('Please choose a file to import!');
-    //   return;
-    // }
-    // else {
-    //   $fid = reset($import_file_ids);
-    //   try {
-    //     \Drupal::service('arc_importer.import')
-    //       ->doBatchImport($fid);
-    //   }
-    //   catch (\Exception $e) {
-    //     $this->messenger()
-    //       ->addError("Error when importing: " . $e->getMessage());
-    //   }
-    // }
-    
-    // $this->messenger()
-    //   ->addMessage("Import Successfully!");
+    $this->messenger()
+      ->addMessage("Successfully imported from {$_from} to {$_to}");
   }
 
   private function getSheet($file_path) {
     try {
+      $spreadsheet = IOFactory::load($file_path);
+    }
+    catch (\Exception $e) {
+      $this->logger()
+        ->error($this->t('Error loading spreadsheet: @err', [
+            '@err' => $e->getMessage()
+          ])
+        );
+      return NULL;
+    }
+    return $spreadsheet;
+  }
+
+  /**
+   * @param int $file_id The fid of the import file
+   * @return \PhpOffice\PhpSpreadsheet\Spreadsheet|NULL
+   *   Spreadsheet on success, NULL on failure
+   */
+  private function getSheetFromFileID($file_id) {
+    try {
+      $file = File::load($file_id);
+      $file_path = $this->streamWrapperManager
+        ->getViaUri($file->getFileUri())
+        ->realpath();
+
       $spreadsheet = IOFactory::load($file_path);
     }
     catch (\Exception $e) {
@@ -329,7 +398,10 @@ class ImporterForm extends FormBase {
     }
     return $spreadsheet;
   }
-
+  /**
+   * @throws \Exception
+   *   when there is an error ocurred
+   */
   protected function getContentViaUrl($url, $limit = 2000000) {
     if(strpos($url, "http") !== 0) {
       $url = "https://" . $url;
@@ -361,7 +433,7 @@ class ImporterForm extends FormBase {
             '@err' => $e->getMessage()
           ])
         );
-      return NULL;
+      throw $e;
     }
   
     return $content;
@@ -402,7 +474,7 @@ class ImporterForm extends FormBase {
 
     if (!empty($img_source)) {
       $directory = 'public://article-images/';
-      \Drupal::service('file_system')
+      $this->fileSystem
         ->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
 
       $image_file = system_retrieve_file($img_source, $directory . $img_name, TRUE, FILE_EXISTS_REPLACE);
@@ -424,7 +496,6 @@ class ImporterForm extends FormBase {
    */
   protected function fetchBodyFromUrl($url) {
     $result = array();
-
   
     try {
       $raw_content = $this->getContentViaUrl($url);
@@ -435,16 +506,72 @@ class ImporterForm extends FormBase {
       $crawler  = new Crawler($raw_content);
       $articles = $crawler->filter('article');
 
-      $result['title'] = $articles->filter('div.et_post_meta_wrapper h1.entry-title')
-        ->html();
-      $result['created'] = $articles->filter('div.et_post_meta_wrapper p.post-meta span.published')
-        ->html();
-      $result['image'] = $articles->filter('div.et_post_meta_wrapper img')
-        ->attr('src');
-      $body = $articles->filter('div.entry-content')
-        ->html();
+      try {
+        $result['title'] = $articles
+          ->filter('div.et_post_meta_wrapper h1.entry-title')
+          ->html('');
+      }
+      catch (\InvalidArgumentException $e) {
+        $this->logger
+        ->warning(
+          $this->t('Found empty title in @url', [
+            '@url' => $url,
+          ])
+        );
+      }
+      try {
+        $result['created'] = $articles
+          ->filter('div.et_post_meta_wrapper p.post-meta span.published')
+          ->html('');
+      }
+      catch (\InvalidArgumentException $e) {
+        $this->logger
+        ->warning(
+          $this->t('Found empty created time in @url', [
+            '@url' => $url,
+          ])
+        );
+      }
+      try {
+        $image = $articles
+          ->filter('div.et_post_meta_wrapper > img');
+        $result['image'] = $image ? $image->attr('src') : '';
+      }
+      catch (\InvalidArgumentException $e) {
+        $this->logger
+        ->warning(
+          $this->t('Found empty banner image in @url', [
+            '@url' => $url,
+          ])
+        );
+      }
+
+      // $articles
+      //   ->filter('div.entry-content div.sharedaddy.sd-sharing-enabled')
+      //   // ->children('div.sharedaddy.sd-sharing-enabled')
+      //   ->each(function (Crawler $crawler) {
+      //     $node = $crawler->getNode(0);
+      //     \Drupal::logger('arc')->warning(print_r($node, true));
+      //     $node->parentNode->removeChild($node);
+      //   });
+      try {
+        $body = $articles
+          ->filter('div.entry-content')
+          ->html('');
+      }
+      catch (\InvalidArgumentException $e) {
+        $this->logger
+        ->warning(
+          $this->t('Found empty post content in @url', [
+            '@url' => $url,
+          ])
+        );
+      }
+      // print_r($body);exit;
+
       $parts = explode('<div class="sharedaddy sd-sharing-enabled">', $body);
       $result['body'] = $parts[0];
+      // $result['body'] = $body;
         // ->children()
         // ->reduce(function (Crawler $node, $i) {
         //   return $node->attr('class') != 'sharedaddy sd-sharing-enabled';
@@ -516,6 +643,15 @@ class ImporterForm extends FormBase {
       };
 
       return $html;
+    }
+    catch (\InvalidArgumentException $e) { // no need to throw, warn instead
+      $this->logger
+      ->warning(
+        $this->t('An exception throwed while fetching @url: @err', [
+          '@url' => $url,
+          '@err' => $e->getMessage()
+        ])
+      );
     }
     catch (\Exception $e) {
       $this->logger

@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_help().
@@ -20,5 +21,20 @@ function arc_importer_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ * 
+ * Remove the article from the status table,
+ * so you can re-import or added later
+ */
+function arc_importer_node_delete(EntityInterface $entity) {
+  if ($entity->bundle() === 'article') {
+    \Drupal::service('database')
+      ->delete('arc_importer_articles')
+      ->condition('url', $entity->get('field_canonical_url')->getString())
+      ->execute();
   }
 }

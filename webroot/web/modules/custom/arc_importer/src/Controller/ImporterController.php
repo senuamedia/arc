@@ -4,13 +4,15 @@ namespace Drupal\arc_importer\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Query\PagerSelectExtender;
+use Drupal\Core\Database\Query\TableSortExtender;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\Utility\TableSort;
 use Drupal\file\Entity\File;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
@@ -240,7 +242,7 @@ class ImporterController extends ControllerBase {
         $node->save();
 
         # Process the body
-        $wp_post_url = $row_data['B'];
+        $wp_post_url = html_entity_decode($row_data['B']);
         $raw_body = $this->fetchBodyFromUrl($wp_post_url);
 
         # Completed
@@ -496,8 +498,7 @@ class ImporterController extends ControllerBase {
       'url' => [
         'data'      => $this->t('Url'),
         'type'      => 'link',
-        'field'     => 'url',
-        // 'specifier' => 'url'
+        // 'field'     => 'url',
       ],
       'status' => [
         'data'      => $this->t('Status'),
@@ -506,16 +507,18 @@ class ImporterController extends ControllerBase {
       ],
       'message' => [
         'data'      => $this->t('Message'),
-        'field'     => 'message',
+        // 'field'     => 'message',
         'specifier' => 'message'
-      ]
+      ],
     ];
   
     $results = $this->database
       ->select('arc_importer_articles', 'arc')
       ->fields('arc')
-      // ->sort('row', 'DESC')
-      ->range(1, 50)
+      ->extend(PagerSelectExtender::class)
+      ->limit(50)
+      ->extend(TableSortExtender::class)
+      ->orderByHeader($header)
       ->execute();
 
     $data = [];
@@ -529,16 +532,23 @@ class ImporterController extends ControllerBase {
     }
 
     return [
+      // 'count' => [
+      //   '#type'  => 'item',
+      //   '#title' => $this->t('Total Node Count'),
+      //   'markup' => [
+      //     '#markup' => $results->rowCount()
+      //   ],
+      // ],
       'results' => [
         '#type'    => 'table',
-        '#caption' => $this->t('Importing Status'),
+        // '#caption' => $this->t('Importing Status'),
         '#header'  => $header,
         '#rows'    => $data,
         '#empty'   => $this->t('No data found.'),
       ],
-      // 'pager' => [
-      //   '#type' => 'pager',
-      // ],
+      'pager' => [
+        '#type' => 'pager',
+      ],
     ];
   }
 }

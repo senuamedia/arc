@@ -1,12 +1,9 @@
 arc_importer.import:
   title: ARC Importer
   route_name: arc_importer.import
-  description: ARC Importer
-  parent: system.admin_config
-  weight: 100
+  base_route: arc_importer.import
 
 arc_importer.status:
   title: Import Status
   route_name: arc_importer.status
-  description: ARC Importer Status
-  parent: arc_importer.import
+  base_route: arc_importer.import
