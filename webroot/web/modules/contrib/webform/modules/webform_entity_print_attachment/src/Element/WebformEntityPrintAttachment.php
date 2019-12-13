@@ -19,6 +19,7 @@ class WebformEntityPrintAttachment extends WebformAttachmentBase {
     return parent::getInfo() + [
       '#view_mode' => 'html',
       '#export_type' => 'pdf',
+      '#template' => '',
     ];
   }
 
@@ -36,9 +37,13 @@ class WebformEntityPrintAttachment extends WebformAttachmentBase {
     // @see webform_entity_print_entity_view_alter()
     \Drupal::request()->request->set('_webform_entity_print', TRUE);
 
-    // Set view mode.
+    // Set view mode or render custom twig.
     // @see \Drupal\webform\WebformSubmissionViewBuilder::view
+    // @see webform_entity_print_attachment_webform_submission_view_alter()
     $view_mode = (isset($element['#view_mode'])) ? $element['#view_mode'] : 'html';
+    if ($view_mode === 'twig') {
+      $webform_submission->_webform_view_mode_twig = $element['#template'];
+    }
     \Drupal::request()->request->set('_webform_submissions_view_mode', $view_mode);
 
     // Get scheme.
@@ -61,6 +66,7 @@ class WebformEntityPrintAttachment extends WebformAttachmentBase {
       \Drupal::logger('webform_entity_print')->error("Unable to generate '@filename'.", $context);
       $contents = '';
     }
+
     return $contents;
   }
 

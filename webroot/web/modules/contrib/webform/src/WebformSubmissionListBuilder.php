@@ -848,7 +848,11 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
       case 'created':
       case 'completed':
       case 'changed':
-        return ($is_raw) ? $entity->{$name}->value : $entity->{$name}->value ? \Drupal::service('date.formatter')->format($entity->{$name}->value) : '';
+        /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
+        $date_formatter = \Drupal::service('date.formatter');
+        return ($is_raw ? $entity->{$name}->value :
+          ($entity->{$name}->value ? $date_formatter->format($entity->{$name}->value) : '')
+        );
 
       case 'entity':
         $source_entity = $entity->getSourceEntity();
@@ -1023,7 +1027,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('create') && $webform->getSetting('submission_user_duplicate')) {
+      if ($entity->access('duplicate') && $webform->getSetting('submission_user_duplicate')) {
         $operations['duplicate'] = [
           'title' => $this->t('Duplicate'),
           'weight' => 23,
@@ -1065,14 +1069,14 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($webform->access('submission_update_any') && $webform->hasMessageHandler()) {
+      if ($entity->access('resend') && $webform->hasMessageHandler()) {
         $operations['resend'] = [
           'title' => $this->t('Resend'),
           'weight' => 22,
           'url' => $this->requestHandler->getUrl($entity, $this->sourceEntity, 'webform_submission.resend_form'),
         ];
       }
-      if ($webform->access('submission_update_any')) {
+      if ($entity->access('duplicate')) {
         $operations['duplicate'] = [
           'title' => $this->t('Duplicate'),
           'weight' => 23,
@@ -1290,8 +1294,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
       return $result;
     }
     else {
-      $order = $this->request->query->get('order', $order);
-      if ($order) {
+      if ($order && $order['sql']) {
         $query->tableSort($header);
       }
       else {

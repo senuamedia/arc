@@ -5,6 +5,7 @@ namespace Drupal\webform;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
@@ -493,8 +494,8 @@ class WebformHelpManager implements WebformHelpManagerInterface {
     switch ($video_display) {
       case 'dialog':
         $route_name = 'webform.help.video';
-        $route_parameters  = ['id' => str_replace('_', '-', $video_info['id'])];
-        $route_options  = ($options['more']) ? ['query' => ['more' => 1]] : [];
+        $route_parameters = ['id' => str_replace('_', '-', $video_info['id'])];
+        $route_options = ($options['more']) ? ['query' => ['more' => 1]] : [];
         return [
           '#url' => Url::fromRoute($route_name, $route_parameters, $route_options),
           '#attributes' => WebformDialogHelper::getModalDialogAttributes(WebformDialogHelper::DIALOG_WIDE, $options['class']),
@@ -553,7 +554,8 @@ class WebformHelpManager implements WebformHelpManagerInterface {
         $build['content'][$category_name]['projects'][$project_name] = [
           'title' => [
             '#type' => 'link',
-            '#title' => $project['title'],
+            '#title' => Markup::create($project['title']
+              . (!empty($project['experimental']) ? ' [' . $this->t('EXPERIMENTAL') . ']' : '')),
             '#url' => $project['url'],
             '#prefix' => '<dt>',
             '#suffix' => ((isset($project['recommended'])) ? ' ★' : '') . '</dt>',
@@ -1179,6 +1181,30 @@ class WebformHelpManager implements WebformHelpManagerInterface {
           ],
         ],
       ],
+      'limits' => [
+        'title' => $this->t('Submission limits and options limits'),
+        'content' => $this->t("This screencast shows how to set submission limits and options limits."),
+        'youtube_id' => 'fdkv10v3AX4',
+        'presentation_id' => '1owgZ4ueFagynwnzvBsH6krpvLqMXunMJXD32BqMCC-E',
+        'links' => [
+          [
+            'title' => $this->t('Webform now supports option limits as well as submission limits'),
+            'url' => 'https://www.drupal.org/node/3080869',
+          ],
+        ],
+      ],
+      'custom_options' => [
+        'title' => $this->t('Webform custom options elements'),
+        'content' => $this->t("The screencast walks through creating custom webform options elements."),
+        'youtube_id' => '08Ze1eACM48',
+        'presentation_id' => '1MZQ0we3qG9G3eFLtnHXiQ5c_uDfn1jjiBHciAeW311g',
+        'links' => [
+          [
+            'title' => $this->t('Webform module supports creating custom elements using HTML and SVG markup'),
+            'url' => 'https://www.drupal.org/node/3089024',
+          ],
+        ],
+      ],
       'print' => [
         'title' => $this->t('Printing webform submissions as PDF documents'),
         'content' => $this->t("This screencast shows how to download, export, and email PDF copies of webform submissions."),
@@ -1280,6 +1306,12 @@ class WebformHelpManager implements WebformHelpManagerInterface {
         'content' => $this->t('This presentation introduces designers to the Webform module for Drupal 8.'),
         'youtube_id' => '-7lxtfYgidY',
         'presentation_id' => '1agZ7Mq0UZBn746dKRbWjQCYvd8HptlejtPhUIuQ2IrE',
+      ],
+      'government' => [
+        'title' => $this->t('Webforms for Government'),
+        'content' => $this->t('This screencast will explore how governments can leverage the Webform module for Drupal 8 to build accessible forms that securely collective massive amounts of data.'),
+        'youtube_id' => 'WQG6163r9Rs',
+        'presentation_id' => '1Mn7qlSR_njTZcGAM3PNQZR8Tvg7qtPhZFQja7Mj5uzI',
       ],
     ];
 
@@ -1403,7 +1435,18 @@ class WebformHelpManager implements WebformHelpManagerInterface {
           ],
         ],
       ],
-
+      'webwash_taxonomy_terms' => [
+        'title' => $this->t('Use Taxonomy Terms as Webform Options in Drupal 8'),
+        'owner' => $this->t('WebWash'),
+        'content' => $this->t('Learn how to create a select element which uses a taxonomy vocabulary instead of the standard options.'),
+        'youtube_id' => 'hAqbYDm5EDg',
+        'links' => [
+          [
+            'title' => $this->t('Use Taxonomy Terms as Webform Options in Drupal 8 | WebWash'),
+            'url' => 'https://www.webwash.net/taxonomy-terms-as-webform-options-in-drupal/',
+          ],
+        ],
+      ],
     ];
     foreach ($videos as $id => &$video_info) {
       $video_info['id'] = $id;

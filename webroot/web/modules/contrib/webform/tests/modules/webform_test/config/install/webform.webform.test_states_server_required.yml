@@ -317,6 +317,23 @@ elements: |
             '!value': ''
           ':input[name="datetime_trigger[time]"]':
             '!value': ''
+  currency_trigger_details:
+    '#type': details
+    '#title': currency_trigger
+    '#open': true
+    currency_trigger:
+      '#type': checkbox
+      '#title': currency_trigger
+    currency_dependent_required:
+      '#type': textfield
+      '#title': currency_dependent_required
+      '#input_mask': '''alias'': ''currency'''
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="currency_trigger"]':
+            checked: true
+  
   address_trigger_details:
     '#type': details
     '#title': address_trigger
@@ -496,6 +513,7 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_progress_link: false
+  wizard_progress_states: false
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -543,6 +561,7 @@ settings:
   purge_days: null
   results_disabled: true
   results_disabled_ignore: true
+  token_view: false
   token_update: false
 access:
   create:

@@ -161,6 +161,7 @@ abstract class TextBase extends WebformElementBase {
       '#title' => $this->t('Pattern'),
       '#description' => $this->t('A <a href=":href">regular expression</a> that the element\'s value is checked against.', [':href' => 'http://www.w3schools.com/js/js_regexp.asp']),
       '#value__title' => $this->t('Pattern regular expression'),
+      '#value__maxlength' => 255,
     ];
     $form['validation']['pattern_error'] = [
       '#type' => 'textfield',
@@ -240,15 +241,33 @@ abstract class TextBase extends WebformElementBase {
    */
   public static function validateInputMask(&$element, FormStateInterface $form_state, &$complete_form) {
     // Set required error when input mask is submitted.
+    if (!empty($element['#required'])
+      && static::isDefaultInputMask($element, $element['#value'])) {
+      WebformElementHelper::setRequiredError($element, $form_state);
+    }
+  }
+
+  /**
+   * Check if an element's value is the input mask's default value.
+   *
+   * @param array $element
+   *   An element.
+   * @param string $value
+   *   A value.
+   *
+   * @return bool
+   *   TRUE if an element's value is the input mask's default value.
+   */
+  public static function isDefaultInputMask(array $element, $value) {
+    if (empty($element['#input_mask']) || $value === '') {
+      return FALSE;
+    }
+
+    $input_mask = $element['#input_mask'];
     $input_masks = [
       "'alias': 'currency'" => '$ 0.00',
     ];
-    $input_mask = $element['#input_mask'];
-    if (!empty($element['#required'])
-      && isset($input_masks[$input_mask])
-      && $input_masks[$input_mask] == $element['#value']) {
-        WebformElementHelper::setRequiredError($element, $form_state);
-    }
+    return (isset($input_masks[$input_mask]) && $input_masks[$input_mask] === $value) ? TRUE : FALSE;
   }
 
   /**
@@ -318,7 +337,7 @@ abstract class TextBase extends WebformElementBase {
    *   example, and patterh.
    */
   protected function getInputMasks() {
-    return [
+    $input_masks = [
       "'alias': 'currency'" => [
         'title' => $this->t('Currency'),
         'example' => '$ 9.99',
@@ -380,10 +399,21 @@ abstract class TextBase extends WebformElementBase {
         'example' => 'UPPERCASE',
       ],
       "'casing': 'lower'" => [
-        'title' => $this->t('Lowercase '),
+        'title' => $this->t('Lowercase'),
         'example' => 'lowercase',
       ],
     ];
+
+    // Get input masks.
+    $modules = \Drupal::moduleHandler()->getImplementations('webform_element_input_masks');
+    foreach ($modules as $module) {
+      $input_masks += \Drupal::moduleHandler()->invoke($module, 'webform_element_input_masks');
+    }
+
+    // Alter input masks.
+    \Drupal::moduleHandler()->alter('webform_element_input_masks', $input_masks);
+
+    return $input_masks;
   }
 
   /**

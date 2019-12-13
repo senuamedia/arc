@@ -113,6 +113,7 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_progress_link: false
+  wizard_progress_states: false
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -160,6 +161,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  token_view: false
   token_update: false
 access:
   create:
@@ -221,7 +223,8 @@ handlers:
     weight: -48
     settings:
       states:
-        - draft
+        - draft_created
+        - draft_updated
         - completed
         - updated
       notes: '[webform_submission:values:notes_add]'
@@ -246,7 +249,8 @@ handlers:
     weight: -50
     settings:
       states:
-        - draft
+        - draft_created
+        - draft_updated
         - converted
         - completed
         - updated
@@ -269,7 +273,8 @@ handlers:
     weight: -49
     settings:
       states:
-        - draft
+        - draft_created
+        - draft_updated
         - converted
         - completed
         - updated
@@ -292,7 +297,8 @@ handlers:
     weight: -52
     settings:
       states:
-        - draft
+        - draft_created
+        - draft_updated
         - converted
         - completed
         - updated

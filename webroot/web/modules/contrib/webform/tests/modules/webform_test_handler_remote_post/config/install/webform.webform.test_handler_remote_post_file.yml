@@ -92,6 +92,7 @@ settings:
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_progress_link: false
+  wizard_progress_states: false
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -141,6 +142,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  token_view: false
   token_update: false
 access:
   create:
@@ -230,8 +232,10 @@ handlers:
       updated_custom_data: ''
       deleted_url: 'http://webform-test-handler-remote-post/deleted'
       deleted_custom_data: ''
-      draft_url: 'http://webform-test-handler-remote-post/draft'
-      draft_custom_data: ''
+      draft_created_url: 'http://webform-test-handler-remote-post/draft_created'
+      draft_created_custom_data: ''
+      draft_updated_url: 'http://webform-test-handler-remote-post/draft_updated'
+      draft_updated_custom_data: ''
       converted_url: 'http://webform-test-handler-remote-post/converted'
       converted_custom_data: ''
       message: ''

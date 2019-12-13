@@ -3,6 +3,7 @@
 namespace Drupal\webform\EntitySettings;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\Element\WebformMessage;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformTokenManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -99,6 +100,21 @@ class WebformEntitySettingsConfirmationForm extends WebformEntitySettingsBaseFor
       ],
       '#default_value' => $settings['confirmation_type'],
     ];
+    // Page.
+    if ($webform->isResultsDisabled()) {
+      $form['confirmation_type']['page'] = [
+        '#type' => 'webform_message',
+        '#message_type' => 'warning',
+        '#message_close' => TRUE,
+        '#message_storage' => WebformMessage::STORAGE_SESSION,
+        '#message_message' => $this->t("Because the saving of submissions is disabled, the <code>[webform_submission:values]</code> token will not be available to the confirmation page's message."),
+        '#states' => [
+          'visible' => [
+            ':input[name="confirmation_type"]' => ['value' => WebformInterface::CONFIRMATION_PAGE],
+          ],
+        ],
+      ];
+    }
     // None.
     $form['confirmation_type']['none'] = [
       '#type' => 'webform_message',
@@ -161,13 +177,13 @@ class WebformEntitySettingsConfirmationForm extends WebformEntitySettingsBaseFor
     $form['confirmation_url']['confirmation_exclude_token'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Exclude token from Confirmation URL'),
-      '#description' => $this->t('If checked, to submissions token will be removed from the Confirmation URL and the [webform-submission] tokens will not be available within the confirmation message.'),
+      '#description' => $this->t('If checked, to submissions token will be removed from the Confirmation URL and the [webform_submission] tokens will not be available within the confirmation message.'),
       '#default_value' => $settings['confirmation_exclude_token'],
       '#access' => !$webform->isResultsDisabled(),
     ];
     $form['confirmation_url']['token_tree_link'] = $this->tokenManager->buildTreeElement(
       ['webform', 'webform_submission', 'webform_handler'],
-      $this->t('You may use tokens to pass query string parameters. Make sure all tokens include the urlencode suffix. (i.e. [webform-submission:values:email:urlencode])')
+      $this->t('You may use tokens to pass query string parameters. Make sure all tokens include the urlencode suffix. (i.e. [webform_submission:values:email:urlencode])')
     );
 
     // Confirmation settings.

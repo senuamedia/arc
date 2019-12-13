@@ -2,8 +2,10 @@
 
 namespace Drupal\webform;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\webform\Plugin\WebformElement\TextBase;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\Plugin\WebformElement\WebformElement;
 use Drupal\webform\Plugin\WebformElementManagerInterface;
@@ -56,6 +58,32 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
    */
   public function __construct(WebformElementManagerInterface $element_manager) {
     $this->elementManager = $element_manager;
+  }
+
+  /****************************************************************************/
+  // Build pages methods.
+  /****************************************************************************/
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildPages(array $pages, WebformSubmissionInterface $webform_submission) {
+    foreach ($pages as $page_key => $page) {
+      // Check #access which can be set via form alter.
+      if ($page['#access'] === FALSE) {
+        unset($pages[$page_key]);
+      }
+      // Check #states (visible/hidden).
+      if (!empty($page['#states'])) {
+        $state = key($page['#states']);
+        $conditions = $page['#states'][$state];
+        $result = $this->validateState($state, $conditions, $webform_submission);
+        if ($result !== NULL && !$result) {
+          unset($pages[$page_key]);
+        }
+      }
+    }
+    return $pages;
   }
 
   /****************************************************************************/
@@ -220,7 +248,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
         }
 
         $target_trigger = $condition_result ? 'value' : '!value';
-        $target_name = 'webform_states_' . md5($selector);
+        $target_name = 'webform_states_' . Crypt::hashBase64($selector);
         $target_selector = ':input[name="' . $target_name . '"]';
 
         // IMPORTANT:
@@ -318,6 +346,9 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
       // Determine if the element is required.
       $is_required = $this->validateConditions($conditions, $webform_submission);
       $is_required = ($state == 'optional') ? !$is_required : $is_required;
+      if (!$is_required) {
+        continue;
+      }
 
       // Determine if the element is empty (but not zero).
       if (isset($element['#webform_key'])) {
@@ -326,11 +357,20 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
       else {
         $value = $element['#value'];
       }
-      $is_empty = (empty($value) && $value !== '0');
 
-      // If required and empty then set required error.
-      if ($is_required && $is_empty) {
-        WebformElementHelper::setRequiredError($element, $form_state);
+      // Perform required validation. Use element's method if available.
+      $element_definition = $element_plugin->getFormElementClassDefinition();
+      if (method_exists($element_definition, 'setRequiredError')) {
+        $element_definition::setRequiredError($element, $form_state);
+      }
+      else {
+        $is_empty = (empty($value) && $value !== '0');
+        $is_default_input_mask = (TextBase::isDefaultInputMask($element, $value));
+
+        // If required and empty then set required error.
+        if ($is_empty || $is_default_input_mask) {
+          WebformElementHelper::setRequiredError($element, $form_state);
+        }
       }
     }
   }

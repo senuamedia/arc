@@ -73,11 +73,11 @@ class Select extends OptionsBase {
     $select2_exists = $this->librariesManager->isIncluded('jquery.select2');
     $choices_exists = $this->librariesManager->isIncluded('choices');
     $chosen_exists = $this->librariesManager->isIncluded('jquery.chosen');
-    $default_select =
-      ($select2_exists) ? '#select2' :
-        ($choices_exists) ? '#choices' :
-          ($chosen_exists) ? '#chosen' :
-            NULL;
+    $default_select = ($select2_exists ? '#select2' :
+      ($choices_exists ? '#choices' :
+        ($chosen_exists ? '#chosen' : NULL)
+      )
+    );
     if (isset($element['#select2']) && !$select2_exists) {
       $element['#' . $default_select] = TRUE;
     }
@@ -113,6 +113,9 @@ class Select extends OptionsBase {
     if (isset($element['#multiple']) && $element['#multiple'] > 1) {
       $element['#attributes']['data-limit'] = $element['#multiple'];
     }
+
+    // Attach library which allows options to be disabled via JavaScript.
+    $element['#attached']['library'][] = 'webform/webform.element.select';
 
     parent::prepare($element, $webform_submission);
   }

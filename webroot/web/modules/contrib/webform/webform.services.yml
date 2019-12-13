@@ -41,7 +41,7 @@ services:
 
   webform.elements_validator:
     class: Drupal\webform\WebformEntityElementsValidator
-    arguments: ['@renderer', '@plugin.manager.webform.element', '@entity_type.manager', '@form_builder']
+    arguments: ['@renderer', '@plugin.manager.webform.element', '@entity_type.manager', '@form_builder', '@config.factory']
 
   webform.email_provider:
     class: Drupal\webform\WebformEmailProvider
@@ -89,7 +89,7 @@ services:
 
   webform.theme_manager:
     class: Drupal\webform\WebformThemeManager
-    arguments: ['@config.factory', '@renderer', '@theme.manager', '@theme_handler', '@theme.initialization']
+    arguments: ['@config.factory', '@renderer', '@theme.manager', '@theme_handler', '@theme.initialization', '@current_route_match']
 
   webform.access_rules_manager:
     class: Drupal\webform\WebformAccessRulesManager

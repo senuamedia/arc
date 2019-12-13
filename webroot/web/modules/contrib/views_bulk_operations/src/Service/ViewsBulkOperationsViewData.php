@@ -160,6 +160,30 @@ class ViewsBulkOperationsViewData implements ViewsBulkOperationsViewDataInterfac
   }
 
   /**
+   * Helper function that restores pager data.
+   *
+   * Pager data is stored in global variables and changed every
+   * time the view is executed, even if in a new object instance
+   * so we need to save and restore the original values.
+   */
+  protected function fixPagerData() {
+    static $values;
+    if (!isset($values)) {
+      foreach (['pager_page_array', 'pager_total', 'pager_total_items'] as $key) {
+        if (isset($GLOBALS[$key])) {
+          $values[$key] = $GLOBALS[$key];
+        }
+      }
+    }
+    elseif (!empty($values)) {
+      foreach ($values as $key => $value) {
+        $GLOBALS[$key] = $value;
+      }
+      unset($values);
+    }
+  }
+
+  /**
    * Get the total count of results on all pages.
    *
    * @param bool $clear_on_exposed
@@ -170,21 +194,33 @@ class ViewsBulkOperationsViewData implements ViewsBulkOperationsViewDataInterfac
    */
   public function getTotalResults($clear_on_exposed = FALSE) {
     $total_results = NULL;
+
     if (!$clear_on_exposed && !empty($this->view->getExposedInput())) {
       // Execute the view without exposed input set.
       $view = Views::getView($this->view->id());
       $view->setDisplay($this->view->current_display);
+      // If there are any arguments, pass them through.
+      if (!empty($this->view->args)) {
+        $view->setArguments($this->view->args);
+      }
       $view->get_total_rows = TRUE;
 
       // We have to set exposed input to some value here, empty
       // value will be overwritten with query params by Views so
       // setting an empty array wouldn't work.
       $view->setExposedInput(['_views_bulk_operations_override' => TRUE]);
-      $view->execute();
     }
     else {
       $view = $this->view;
     }
+
+    $this->fixPagerData();
+
+    // Execute the view if not already executed.
+    $view->execute();
+
+    $this->fixPagerData();
+
     if (!empty($view->pager->total_items)) {
       $total_results = $view->pager->total_items;
     }
