@@ -1,6 +1,8 @@
 framework:
   css:
     theme:
+      assets/css/slick-theme.css: {}
+      assets/css/slick.css: {}
       css/style.css: {}
       dist/css/style.min.css: {}
       dist/css/style.min.css.map: {}
@@ -19,3 +21,5 @@ framework:
     bootstrap/assets/javascripts/bootstrap/scrollspy.js: {}
     bootstrap/assets/javascripts/bootstrap/tab.js: {}
     bootstrap/assets/javascripts/bootstrap/transition.js: {}
+    assets/js/slick.min.js: {}
+    assets/js/arc.js: {}

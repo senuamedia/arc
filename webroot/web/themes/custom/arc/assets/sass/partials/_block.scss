@@ -1,0 +1,31 @@
+/*=====Have an Enquiry What we do=====*/
+#block-haveanenquiry-2 {
+    margin-top: 60px;
+    padding: 60px 0;
+    text-align: center;
+    .block-title {
+        font-size: 24px;
+        color: #000;
+        line-height: 29px;
+        margin-bottom: 35px;
+    }
+    .field--name-body {
+        p:first-child {
+            font-size: 16px;
+            color: #000;
+            max-width: 720px;
+            font-weight: 19px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+        p:last-child a {
+            padding: 22px 0;
+            min-width: 242px;
+            color: #fff;
+            background: #a36d2f;
+            font-size: 16px;
+            line-height: 1;
+            display: inline-block;
+        }
+    }
+}
