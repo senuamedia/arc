@@ -102,40 +102,48 @@
 {% endif %}
 
 {# slideshow #}
+{% if page.slideshow %}
   {% block slideshow %}
     <div class="slideshow">
       <div class="container-fluid">
       {{ page.slideshow }}
+      </div>
     </div>
-    </div>
-{% endblock %}
+  {% endblock %}
+{% endif %}
 
 {# banner #}
+{% if page.banner %}
   {% block banner %}
     <div class="banner">
       <div class="container-fluid">
       {{ page.banner }}
+      </div>
     </div>
-    </div>
-{% endblock %}
+  {% endblock %}
+{% endif %}
 
 {# content_top #}
+{% if page.content_top %}
   {% block content_top %}
     <div class="content-top">
       <div class="container">
       {{ page.content_top }}
+      </div>
     </div>
-    </div>
-{% endblock %}
+  {% endblock %}
+{% endif %}
 
 {# content_highlight #}
+{% if page.content_highlight %}
   {% block content_highlight %}
     <div class="content-highlight">
       <div class="container">
       {{ page.content_highlight }}
+      </div>
     </div>
-    </div>
-{% endblock %}
+  {% endblock %}
+{% endif %}
 
 {# Main #}
 {% block main %}
@@ -198,13 +206,15 @@
   <!-- </div>
 </section> -->
 {# content_bottom #}
+{% if page.content_bottom %}
   {% block content_bottom %}
     <div class="content-bottom">
       <div class="container">
       {{ page.content_bottom }}
+      </div>
     </div>
-    </div>
-{% endblock %}
+  {% endblock %}
+{% endif %}
 
 {% if page.footer_top %}
   {{ page.footer_top }}

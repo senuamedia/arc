@@ -1,6 +1,5 @@
 /*=====Have an Enquiry What we do=====*/
 #block-haveanenquiry-2 {
-    margin-top: 60px;
     padding: 60px 0;
     text-align: center;
     .block-title {
@@ -14,7 +13,7 @@
             font-size: 16px;
             color: #000;
             max-width: 720px;
-            font-weight: 19px;
+            line-height: 19px;
             margin: 0 auto;
             margin-bottom: 30px;
         }
@@ -28,4 +27,23 @@
             display: inline-block;
         }
     }
+}
+/*=====Find us contact=====*/
+#block-contactfindus {
+    .field--name-body {
+        display: flex;
+        justify-content: space-between;
+        .info-contact {
+            max-width: calc(50% - 50px);
+            flex: 0 0 calc(50% - 50px);
+        }
+        .map-contact {
+            max-width: 50%;
+            flex: 0 0 50%;
+        }
+    }
+}
+/*=====Making an offer=====*/
+#block-makinganoffer {
+    max-width: 539px;
 }
