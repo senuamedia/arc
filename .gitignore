@@ -4,3 +4,4 @@ webroot/vendor/*
 webroot/web/sites/default/files/styles
 webroot/web/sites/default/files/css/css_*
 webroot/web/sites/default/settings.php
+node_modules/
