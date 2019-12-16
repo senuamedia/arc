@@ -362,6 +362,27 @@
         &:last-child {
             margin-bottom: 0;
         }
+        .views-field-field-title {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #000;
+        }
+        .views-field-created {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        .views-field-field-body {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #000;
+        }
+        .views-field-view-node {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #a36d2f;
+            margin-bottom: 25px;
+        }
     }
 }
 /*=====Thumbnail collections=====*/
@@ -395,15 +416,13 @@
     }
 }
 /*=====Single body=====*/
-.block-views-blocksingle-body-block-1 {
-    padding-top: 65px;
-    padding-bottom: 90px;
-}
 .single-body {
     max-width: 660px;
     font-size: 18px;
     line-height: 22px;
     color: #474747;
+    padding-top: 65px;
+    padding-bottom: 90px;
 }
 /*=====Video collections=====*/
 .video-collections {
@@ -483,12 +502,30 @@
 }
 /*=====FAQ=====*/
 .faq-contact {
-    .ui-accordion-header-icon {
-        background: url('../images/plus-solid.svg') no-repeat;
-        background-position: 0;
-        background-size: contain;
-        width: 14px;
-        height: 10px;
+    .ui-accordion-header {
+        margin: 0;
+        padding: 0 0 0 40px;
+        position: relative;
+        margin-top: 15px;
+        color: #ab7627;
+        font-weight: 600;
+        .ui-accordion-header-icon {
+            background: url('../images/plus-solid.svg') no-repeat;
+            background-position: 0;
+            background-size: contain;
+            width: 14px;
+            height: 10px;
+            position: absolute;
+            top: 7px;
+            left: 0;
+        }
+    }
+    .views-row .views-row:first-child .ui-accordion-header {
+        margin-top: 0;
+    }
+    .ui-accordion-content {
+        padding: 15px 0 0 40px;
+        color: #000;
     }
     .views-field-title,
     .ui-state-active,
@@ -497,5 +534,8 @@
     {
         border: none;
         background: none;
+    }
+    .views-row .field-content {
+        font-size: 16px;
     }
 }

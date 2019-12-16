@@ -88,6 +88,15 @@
       {% if not navbar_attributes.hasClass(container) %}
         </div>
       {% endif %}
+      
+      {# search_header #}
+      {% if page.search_header %}
+        {% block search_header %}
+          <div class="search-header">
+          {{ page.search_header }}
+          </div>
+        {% endblock %}
+      {% endif %}
     </header>
   {% endblock %}
 {% endif %}

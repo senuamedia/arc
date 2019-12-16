@@ -30,16 +30,35 @@
 }
 /*=====Find us contact=====*/
 #block-contactfindus {
+    padding-top: 55px;
+    .block-title {
+        margin-bottom: 35px;
+        font-size: 24px;
+    }
     .field--name-body {
         display: flex;
         justify-content: space-between;
         .info-contact {
             max-width: calc(50% - 50px);
             flex: 0 0 calc(50% - 50px);
+            font-size: 16px;
+            color: #000;
+            .info-title,
+            a {
+                color: #dd9933;
+            }
+            a:hover {
+                text-decoration: none;
+            }
         }
         .map-contact {
             max-width: 50%;
             flex: 0 0 50%;
+            position: relative;
+            top: -60px;
+            iframe {
+                width: 100%;
+            }
         }
     }
 }
