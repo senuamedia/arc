@@ -1,7 +1,7 @@
 /*=====Banner What we do=====*/
 .banner-what-we-do {
     position: relative;
-    margin-top: 39px;
+    margin-top: 37px;
     &::before {
         content: '';
         position: absolute;
@@ -537,5 +537,40 @@
     }
     .views-row .field-content {
         font-size: 16px;
+    }
+}
+/*=====Photography collections=====*/
+.photography-collections {
+    padding: 60px 0;
+    .view-content {
+        .views-row {
+            display: flex;
+            max-width: 660px;
+            margin: 0 auto 25px;
+            justify-content: space-between;
+            background: #f7f7f7;
+            .views-field-field-photos {
+                flex: 0 0 38%;
+                max-width: 38%;
+            }   
+            .views-field-nothing {
+                max-width: calc(62% - 25px);
+                flex:  0 0 calc(62% - 25px);
+                color: #000;
+                .views-field-title {
+                    margin-top: 25px;
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+                .views-field-body {
+                    margin-top: 20px;
+                    font-size: 16px;
+                    max-width: 350px;
+                }
+            }
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }

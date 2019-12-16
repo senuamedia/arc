@@ -459,3 +459,24 @@ body:not(.path-frontpage) .content-highlight {
 		font-weight: bold;
 	}
 }
+#edit-your-details {
+	box-shadow: none;
+	background-color: transparent;
+	.panel-heading {
+		background-color: transparent;
+		border: none;
+		padding: 0;
+		margin-top: 32px;
+		margin-bottom: 25px;
+		.panel-title {
+			margin: 0;
+			font-weight: 600;
+			padding: 0;
+			font-size: 24px;
+			color: #000;
+		}
+	}
+	.panel-body {
+		padding: 0;
+	}
+}
