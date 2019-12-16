@@ -1,5 +1,0 @@
-name: Arc Importer
-type: module
-description: 'Arc Importer'
-core: 8.x
-package: 'ARC'

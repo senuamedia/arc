@@ -1,8 +1,0 @@
-uuid: d7593490-a5bc-44b6-97bb-9098566a0154
-langcode: en
-status: true
-dependencies: {  }
-name: 'Categories 2'
-vid: categories_2
-description: 'Categories for What we do (Our services)'
-weight: 0
