@@ -1,0 +1,27 @@
+arc_importer.import:
+  path: '/admin/arc/import'
+  defaults:
+    _form: '\Drupal\arc_importer\Form\ImporterForm'
+    title: ARC Importer
+  requirements:
+    _permission: 'administer site import'
+  options:
+    _admin_route: TRUE
+
+arc_importer.status:
+  path: '/admin/arc/status'
+  defaults:
+    _controller: '\Drupal\arc_importer\Controller\ImporterController::status'
+    title: ARC Importer Status
+  requirements:
+    _permission: 'administer site import'
+  options:
+    _admin_route: TRUE
+
+arc_importer.test:
+  path: '/test'
+  defaults:
+    _controller: '\Drupal\arc_importer\Controller\ImporterController::test'
+    title: ARC Importer
+  requirements:
+    _permission: 'access content'

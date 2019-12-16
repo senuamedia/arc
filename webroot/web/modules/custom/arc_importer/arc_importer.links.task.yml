@@ -1,0 +1,9 @@
+arc_importer.import:
+  title: ARC Importer
+  route_name: arc_importer.import
+  base_route: arc_importer.import
+
+arc_importer.status:
+  title: Import Status
+  route_name: arc_importer.status
+  base_route: arc_importer.import

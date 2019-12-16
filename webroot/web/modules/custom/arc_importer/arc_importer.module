@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Contains arc_importer.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_help().
+ */
+function arc_importer_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the arc_importer module.
+    case 'help.page.arc_importer':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Arc Importer') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ * 
+ * Remove the article from the status table,
+ * so you can re-import or added later
+ */
+function arc_importer_node_delete(EntityInterface $entity) {
+  if ($entity->bundle() === 'article') {
+    \Drupal::service('database')
+      ->delete('arc_importer_articles')
+      ->condition('url', $entity->get('field_canonical_url')->getString())
+      ->execute();
+  }
+}
