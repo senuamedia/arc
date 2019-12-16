@@ -1,0 +1,41 @@
+uuid: 14d320c4-a1dc-4dda-b0f8-1dd570954260
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.whats_on.body
+    - field.field.node.whats_on.comment
+    - field.field.node.whats_on.field_image
+    - node.type.whats_on
+  module:
+    - image
+    - text
+    - user
+id: node.whats_on.default
+targetEntityType: node
+bundle: whats_on
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_image:
+    weight: 1
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  comment: true

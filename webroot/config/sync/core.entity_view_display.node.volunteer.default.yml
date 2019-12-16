@@ -1,0 +1,36 @@
+uuid: f32c0c3a-5408-4671-9919-ab77ff1c5546
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.volunteer.body
+    - field.field.node.volunteer.field_name
+    - node.type.volunteer
+  module:
+    - text
+    - user
+id: node.volunteer.default
+targetEntityType: node
+bundle: volunteer
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_name:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

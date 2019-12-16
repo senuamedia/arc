@@ -1,0 +1,25 @@
+uuid: 216d74ff-5ea2-4ef0-9e56-1623625f79bd
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:d2d5b406-1769-4fb8-b11b-0552f7f58c10'
+  module:
+    - block_content
+  theme:
+    - arc
+id: footercontenttop
+theme: arc
+region: footer
+weight: -22
+provider: null
+plugin: 'block_content:d2d5b406-1769-4fb8-b11b-0552f7f58c10'
+settings:
+  id: 'block_content:d2d5b406-1769-4fb8-b11b-0552f7f58c10'
+  label: 'Footer content - top'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

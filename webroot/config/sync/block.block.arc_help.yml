@@ -1,0 +1,22 @@
+uuid: 9ddda3b0-5d18-432b-b455-fb1a3ef66a7b
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - arc
+_core:
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: arc_help
+theme: arc
+region: help
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,40 @@
+uuid: 21338dfe-9b03-4e4f-ab56-f57b39cdc116
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.people.body
+    - field.field.node.people.field_avatar
+    - image.style.image_380x285
+    - node.type.people
+  module:
+    - image
+    - text
+    - user
+id: node.people.default
+targetEntityType: node
+bundle: people
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_avatar:
+    weight: 102
+    label: above
+    settings:
+      image_style: image_380x285
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,28 @@
+uuid: 2279cf7e-5f81-4e14-ade3-943664e886e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_medias
+    - media.type.image
+    - node.type.photography
+id: node.photography.field_medias
+field_name: field_medias
+entity_type: node
+bundle: photography
+label: Medias
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

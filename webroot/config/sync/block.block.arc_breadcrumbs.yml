@@ -1,0 +1,27 @@
+uuid: 935f81d7-3b87-434c-8569-9a1f0333d4ab
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - arc
+_core:
+  default_config_hash: wDR9JKEATSWldBjw8du8s3G2zjEYeQf88nlld11hMLo
+id: arc_breadcrumbs
+theme: arc
+region: top_bar
+weight: -23
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\n/arc/home-page"
+    negate: true
+    context_mapping: {  }

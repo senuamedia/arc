@@ -1,0 +1,36 @@
+uuid: 4d6df195-3ace-4d22-a8dd-3e46d9f64c8c
+langcode: en
+status: false
+dependencies:
+  module:
+    - ctools
+    - system
+  theme:
+    - arc
+_core:
+  default_config_hash: 1TQP4b3ZnlzvIH9bj6cpCz_SyUHdJjLQkZnHpikjjhw
+id: arc_page_title
+theme: arc
+region: header
+weight: -22
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\n/*"
+    negate: true
+    context_mapping: {  }
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      arc: arc
+      topic: topic
+    negate: true
+    context_mapping:
+      node: '@node.node_route_context:node'

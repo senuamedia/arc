@@ -1,0 +1,30 @@
+uuid: 3eed8cc8-a449-4b63-b627-642cd5da9678
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.thumbnail_of_collections
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__thumbnail_of_collections_block_1
+theme: arc
+region: content
+weight: -24
+provider: null
+plugin: 'views_block:thumbnail_of_collections-block_1'
+settings:
+  id: 'views_block:thumbnail_of_collections-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /collections
+    negate: false
+    context_mapping: {  }

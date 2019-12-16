@@ -1,0 +1,22 @@
+uuid: 1bc2c996-3523-46ba-8f9b-da2a2c6680f8
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - arc
+_core:
+  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
+id: arc_messages
+theme: arc
+region: header
+weight: -23
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

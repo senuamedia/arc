@@ -1,0 +1,31 @@
+uuid: 4a979619-078f-4b6a-a2e1-e3ba28e1d87f
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:da47ec0b-1fff-45ab-b359-ea2bdf5d8ade'
+  module:
+    - block_content
+    - system
+  theme:
+    - arc
+id: haveanenquiry_2
+theme: arc
+region: content_bottom
+weight: -8
+provider: null
+plugin: 'block_content:da47ec0b-1fff-45ab-b359-ea2bdf5d8ade'
+settings:
+  id: 'block_content:da47ec0b-1fff-45ab-b359-ea2bdf5d8ade'
+  label: 'Have an Enquiry?'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: "/what-we-do\r\n/copyright-and-policies"
+    negate: false
+    context_mapping: {  }

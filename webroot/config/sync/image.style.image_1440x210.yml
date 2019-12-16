@@ -1,0 +1,15 @@
+uuid: b5d5700c-d9f1-45df-b24c-78ca4476bb2d
+langcode: en
+status: true
+dependencies: {  }
+name: image_1440x210
+label: 'Image (1440x210)'
+effects:
+  69ca203e-5487-44f6-b455-624eb3a0913b:
+    uuid: 69ca203e-5487-44f6-b455-624eb3a0913b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1440
+      height: 210
+      anchor: center-center

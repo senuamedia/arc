@@ -1,0 +1,34 @@
+uuid: 10bde1aa-ec87-4720-ba7c-e75256c88578
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.categories_2.field_hero_image
+    - field.field.taxonomy_term.categories_2.field_thumbnail
+    - taxonomy.vocabulary.categories_2
+  module:
+    - image
+    - text
+id: taxonomy_term.categories_2.default
+targetEntityType: taxonomy_term
+bundle: categories_2
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_thumbnail:
+    weight: 0
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden:
+  field_hero_image: true

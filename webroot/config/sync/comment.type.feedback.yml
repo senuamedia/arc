@@ -1,0 +1,8 @@
+uuid: 2de4446f-11a8-4448-b96d-6fc4456c4a50
+langcode: en
+status: true
+dependencies: {  }
+id: feedback
+label: Feedback
+target_entity_type_id: node
+description: ''

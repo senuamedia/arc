@@ -1,0 +1,30 @@
+uuid: d34e94d7-2fea-4131-8f0e-9ad15edacdad
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.thumbnail_collections
+  module:
+    - system
+    - views
+  theme:
+    - arc
+id: views_block__thumbnail_collections_block_2
+theme: arc
+region: content
+weight: -23
+provider: null
+plugin: 'views_block:thumbnail_collections-block_2'
+settings:
+  id: 'views_block:thumbnail_collections-block_2'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /photography-video-sound-collections
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,18 @@
+uuid: 7b60f650-0a8d-433b-bd43-32e69af6c815
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+id: comment.field_follow_comments_by_email
+field_name: field_follow_comments_by_email
+entity_type: comment
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

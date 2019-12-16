@@ -1,0 +1,15 @@
+uuid: f1590afb-3b48-4f18-88e3-b5ee28d478e8
+langcode: en
+status: true
+dependencies: {  }
+name: image_collections
+label: 'Image collections'
+effects:
+  be2e74a6-309e-4035-9f25-b44e9a92550b:
+    uuid: be2e74a6-309e-4035-9f25-b44e9a92550b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 250
+      height: 250
+      anchor: center-center

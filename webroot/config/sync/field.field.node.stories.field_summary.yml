@@ -1,0 +1,22 @@
+uuid: 2ff665a1-d22f-4bf3-9f77-7abbad977428
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary
+    - node.type.stories
+  module:
+    - text
+id: node.stories.field_summary
+field_name: field_summary
+entity_type: node
+bundle: stories
+label: Summary
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary

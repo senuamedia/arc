@@ -1,0 +1,15 @@
+uuid: 063d988b-b2c5-404a-822d-f3ed45c7d8dd
+langcode: en
+status: true
+dependencies: {  }
+name: image_720x289
+label: 'Image (720x289)'
+effects:
+  fed2e72e-b40c-41ce-88e7-9a0d9365d72b:
+    uuid: fed2e72e-b40c-41ce-88e7-9a0d9365d72b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 720
+      height: 289
+      anchor: center-center
