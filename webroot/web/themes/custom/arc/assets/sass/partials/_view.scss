@@ -441,6 +441,19 @@
             .views-field-nothing {
                 max-width: calc(62% - 25px);
                 flex:  0 0 calc(62% - 25px);
+                color: #000;
+                font-size: 16px;
+                .views-field-title {
+                    font-size: 18px;
+                    line-height: 22px;
+                    margin-top: 20px;
+                    font-weight: 600;
+                }
+                .views-field-body {
+                    margin: 20px 0;
+                    line-height: 22px;
+                    max-width: 350px;
+                }
             }
             &:last-child {
                 margin-bottom: 0;
@@ -558,14 +571,16 @@
                 flex:  0 0 calc(62% - 25px);
                 color: #000;
                 .views-field-title {
-                    margin-top: 25px;
+                    margin-top: 20px;
                     font-size: 18px;
                     font-weight: 600;
+                    line-height: 22px;
                 }
                 .views-field-body {
                     margin-top: 20px;
                     font-size: 16px;
                     max-width: 350px;
+                    line-height: 22px;
                 }
             }
             &:last-child {
@@ -573,4 +588,8 @@
             }
         }
     }
+}
+
+.index-search-arc {
+    margin-top: 65px;
 }

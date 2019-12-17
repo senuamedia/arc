@@ -6,6 +6,7 @@
       $(window).once().on("load", function () {
         Drupal.arc.placeholder();
         Drupal.arc.arcSlider();
+        Drupal.arc.arcPhotosSlider();
       });
     }
   };
@@ -21,6 +22,18 @@
         dots: true,
         arrows : true,
         infinite: true,
+      });
+    }
+  };
+
+  Drupal.arc.arcPhotosSlider = function () {
+    var slider = $('.photos-slider .view-content');
+    if (slider.length) {
+      slider.slick({
+        infinite: true,
+        arrows : true,
+        slidesToShow: 4,
+        slidesToScroll: 4,
       });
     }
   };
