@@ -41,8 +41,11 @@
 
   Drupal.arc.whatOurVolunteerSay = function () {
     var header = $('.content-top #block-views-block-what-our-volunteer-say-block-1 div.form-group div div.view-header');
-    var select = header.find('div[class="what-our-volunteer-say"]');
+    var select = header.find('div[class="what-our-volunteer-say-text"]');
     var showElement = header.parent().find('div[class="view-content"]');
+    if (!showElement.hasClass('show')) {
+      showElement.addClass('show');
+    }
 
     select.once().click(function () {
       if (showElement.hasClass('show')) {
