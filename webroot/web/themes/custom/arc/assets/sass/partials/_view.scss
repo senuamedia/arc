@@ -14,18 +14,16 @@
     }
     .views-field-nothing {
         position: absolute;
-        font-size: 33px;
-        line-height: 40px;
+        font-size: 18px;
+        line-height: 22px;
         color: #fff;
         top: 50px;
         left: calc((100% - 1200px)/2);
         max-width: 660px;
         .views_field_title {
             margin-bottom: 25px;
-        }
-        p {
-            font-size: 18px;
-            line-height: 22px;
+            font-size: 33px;
+            line-height: 40px;
         }
     }
     .views-field-field-hero-image {
@@ -506,6 +504,18 @@
             .views-field-nothing {
                 max-width: calc(62% - 25px);
                 flex:  0 0 calc(62% - 25px);
+                font-size: 16px;
+                .views-field-title {
+                    font-size: 18px;
+                    line-height: 22px;
+                    margin-top: 20px;
+                    font-weight: 600;
+                }
+                .views-field-body {
+                    margin: 20px 0;
+                    line-height: 22px;
+                    max-width: 280px;
+                }
             }
             &:last-child {
                 margin-bottom: 0;
@@ -585,6 +595,90 @@
             }
             &:last-child {
                 margin-bottom: 0;
+            }
+        }
+    }
+}
+/*===== Published =====*/
+.published-arc {
+    padding-top: 55px;
+    .view-content {
+        display: flex;
+        justify-content: space-between;
+        .views-row {
+            max-width: calc(33.333% - 25px);
+            flex: 0 0 calc(33.333% - 25px);
+            background: #f7f7f7;
+            color: #000;
+            font-size: 14px;
+            line-height: 17px;
+            &>.views-field {
+                padding-left: 15px;
+            }
+            .views-field-name {
+                font-size: 18px;
+                line-height: 22px;
+                margin-top: 25px;
+                a {
+                    color: #000;
+                    font-weight: 700;
+                }
+            }
+            .views-field-description__value {
+                font-size: 16px;
+                line-height: 19px;
+                margin-top: 20px;
+                margin-bottom: 40px;
+                max-width: 338px;
+            }
+            .views-field-field-thumbnail {
+                padding-left: 0;
+            }
+            .views-field-nothing {
+                margin-top: 23px;
+            }
+            .views-field-field-format {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+/*===== What our volunteer say =====*/
+.what-our-volunteer-say  {
+    padding-top: 60px;
+    .view-header {
+        color: #000;
+        font-size: 18px;
+        line-height: 22px;
+        >* {
+            margin-bottom: 25px;
+        }
+        .what-our-volunteer-say-text {
+            font-size: 27px;
+            line-height: 33px;
+            font-weight: 700;
+            padding: 0 20px;
+        }
+    }
+    .view-content {
+        padding: 0 20px;
+        .views-row {
+            padding-left: 20px;
+            font-size: 20px;
+            color: #000;
+            line-height: 24px;
+            position: relative;
+            margin-bottom: 30px;
+            &::before {
+                content: '';
+                left: 0;
+                position: absolute;
+                height: 100%;
+                width: 3px;
+                background: rgb(221, 153, 51);
+            }
+            .views-field {
+                display: inline-block;
             }
         }
     }

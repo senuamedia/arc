@@ -164,7 +164,7 @@ body:not(.path-frontpage) .content-bottom {
 			max-width: calc(30% - 15px);
 			flex: 0 0 calc(30% - 15px);
 			background: /*rgb(237, 237, 220)*/ #fff;
-			p {
+			.text {
 				padding: 23px 15px;
 				font-size: 14px;
 				line-height: 1;
@@ -325,12 +325,10 @@ body:not(.path-frontpage) .content-bottom {
 	#block-producedbycityofparramatta {
 		max-width: 1200px;
 		margin: 0 auto;
-		p {
-			padding: 20px 0;
-			font-size: 18px;
-			color: #fff;
-			line-height: 23px;
-		}
+		padding: 20px 0;
+		font-size: 18px;
+		color: #fff;
+		line-height: 23px;
 	}
 }
 /*=====Breadcrumb=====*/
@@ -385,11 +383,11 @@ body:not(.path-frontpage) .content-highlight {
 .webform-submission-contact-enquiries-form,
 .webform-submission-form {
 	#edit-processed-text {
-		p {
+		line-height: 19px;
+		color: #000;
+		& * {
 			margin-bottom: 25px;
 			font-size: 16px;
-			line-height: 19px;
-			color: #000;
 			&:nth-child(2) {
 				margin-bottom: 20px;
 				font-size: 14px;
@@ -478,5 +476,24 @@ body:not(.path-frontpage) .content-highlight {
 	}
 	.panel-body {
 		padding: 0;
+	}
+}
+/*=====page Policis=====*/
+.policies-arc {
+	padding: 60px 0;
+	font-size: 18px;
+	color: #000;
+	line-height: 23px;
+	max-width: 720px;
+	margin: 0 auto;
+	h3 {
+		font-size: 20px;
+		font-weight: 700;
+		line-height: 24px;
+		margin-top: 40px;
+		margin-bottom: 30px;
+	}
+	a {
+		color: #dd9933;
 	}
 }
