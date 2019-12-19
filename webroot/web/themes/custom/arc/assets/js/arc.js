@@ -29,14 +29,13 @@
 
   Drupal.arc.arcPhotosSlider = function () {
     var slider = $('.photos-slider .view-content');
-    if (slider.length) {
-      slider.slick({
-        infinite: true,
-        arrows : true,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-      });
-    }
+    slider.slick({
+      infinite: true,
+      arrows : true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+    });
+
   };
 
   Drupal.arc.whatOurVolunteerSay = function () {
@@ -45,14 +44,17 @@
     var showElement = header.parent().find('div[class="view-content"]');
     if (!showElement.hasClass('show')) {
       showElement.addClass('show');
+      select.addClass('show');
     }
 
     select.once().click(function () {
       if (showElement.hasClass('show')) {
         showElement.removeClass('show');
+        select.removeClass('show');
       }
       else {
         showElement.addClass('show');
+        select.addClass('show');
       }
     });
   };

@@ -8,7 +8,7 @@ body.path-frontpage {
 body:not(.path-frontpage) .content-bottom {
 	background: /*#ededdc*/#d0d0ce;
 }
-.layout-main-wrapper {
+body.page-node-type-page .layout-main-wrapper {
 	.region-content {
 		max-width: 1230px;
 		margin: 0 auto;
@@ -495,5 +495,17 @@ body:not(.path-frontpage) .content-highlight {
 	}
 	a {
 		color: #dd9933;
+	}
+}
+/*============*/
+body.page-node-type-article {
+	.content-highlight {
+		.region-content-highlight {
+			display: block;
+		}
+	}
+	.container {
+		max-width: 100%;
+		padding: 0;
 	}
 }

@@ -4,6 +4,8 @@ framework:
       assets/css/slick-theme.css: {}
       assets/css/slick.css: {}
       css/style.css: {}
+      assets/font-awesome-5/css/font-awesome.css: {}
+      assets/font-awesome-5/css/font-awesome.min.css: {}
       dist/css/style.min.css: {}
       dist/css/style.min.css.map: {}
 
