@@ -189,31 +189,29 @@
   </div>
 {% endblock %}
 
-<!-- <section class="section-content">
-  <div class="container"> -->
-      <section{{ content_attributes.addClass(content_classes) }} class="layout-main-wrapper layout-container clearfix">
-        {# Highlighted #}
-        {% if page.highlighted %}
-          {% block highlighted %}
-            <div class="highlighted">{{ page.highlighted }}</div>
-          {% endblock %}
-        {% endif %}
-    
-        {# Help #}
-        {% if page.help %}
-          {% block help %}
-            {{ page.help }}
-          {% endblock %}
-        {% endif %}
-    
-        {# Content #}
-        {% block content %}
-          <a id="main-content"></a>
-          {{ page.content }}
-        {% endblock %}
-      </section>
-  <!-- </div>
-</section> -->
+<section{{ content_attributes.addClass(content_classes) }} class="layout-main-wrapper layout-container clearfix">
+  <div class="container">
+  {# Highlighted #}
+  {% if page.highlighted %}
+    {% block highlighted %}
+      <div class="highlighted">{{ page.highlighted }}</div>
+    {% endblock %}
+  {% endif %}
+
+  {# Help #}
+  {% if page.help %}
+    {% block help %}
+      {{ page.help }}
+    {% endblock %}
+  {% endif %}
+
+  {# Content #}
+  {% block content %}
+    <a id="main-content"></a>
+    {{ page.content }}
+  {% endblock %}
+  </div>
+</section>
 {# content_bottom #}
 {% if page.content_bottom %}
   {% block content_bottom %}
