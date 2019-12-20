@@ -360,26 +360,34 @@
         &:last-child {
             margin-bottom: 0;
         }
-        .views-field-field-title {
-            margin-top: 25px;
+        .views-field-title {
+            margin-top: 20px;
             font-size: 18px;
             color: #000;
+            line-height: 22px;
+            max-width: 350px;
+            font-weight: 600;
         }
         .views-field-created {
             margin-top: 15px;
             color: #666;
             font-size: 14px;
+            line-height: 17px;
         }
-        .views-field-field-body {
-            margin-top: 20px;
+        .views-field-body {
+            margin-top: 15px;
             font-size: 16px;
             color: #000;
+            line-height: 19px;
+            max-width: 350px;
         }
         .views-field-view-node {
             margin-top: 20px;
             font-size: 18px;
             color: #a36d2f;
             margin-bottom: 25px;
+            line-height: 22px;
+            font-weight: 600;
         }
     }
 }
@@ -424,8 +432,8 @@
 }
 /*=====Video collections=====*/
 .video-collections {
-    padding: 60px 0;
-    .view-content {
+    padding: 37px 0 60px;
+    & > .view-content {
         .views-row {
             display: flex;
             max-width: 660px;
@@ -528,6 +536,7 @@
 }
 /*=====FAQ=====*/
 .faq-contact {
+    margin-bottom: 150px;
     .ui-accordion-header {
         margin: 0;
         padding: 0 0 0 40px;
@@ -567,8 +576,8 @@
 }
 /*=====Photography collections=====*/
 .photography-collections {
-    padding: 60px 0;
-    .view-content {
+    padding: 37px 0 60px;
+    & > .view-content {
         .views-row {
             display: flex;
             max-width: 660px;
@@ -721,7 +730,9 @@
     }
 }
 /*===== Attachment =====*/
-.sound-collections-attachment {
+.sound-collections-attachment,
+.video-collections-attachment,
+.photography-collections-attachment {
     position: relative;
     margin-bottom: 55px;
     &::before {
@@ -938,7 +949,56 @@
         line-height: 19px;
     }
 }
+
+.block-views-blockgallery-block-1 {
+    .block-title {
+        max-width: 720px;
+        margin: 0 auto;
+        font-size: 27px;
+        color: #000;
+        line-height: 33px;
+        margin-bottom: 25px;
+    }
+}
+
 .details-gallery {
     max-width: 1230px;
     margin: 0 auto;
+    padding-bottom: 60px;
+    .views-row {
+        .views-field-body {
+            max-width: 720px;
+            margin: 0 auto;
+            color: #000;
+            line-height: 19px;
+            font-size: 16px;
+            margin-bottom: 45px;
+        }
+        .views-field-field-photos {
+            max-width: 950px;
+            margin: 0 auto;
+            .grid-item {
+                width: 31.5%;
+                padding: 7px;
+                position: absolute !important;
+                height: auto !important;
+            }
+        }
+    }
+}
+
+.block-views-blockreferences-block-1 {
+    min-height: 171px;
+    padding: 0 45px;
+    .block-title {
+        margin: 25px 0;
+        color: #000;
+        font-size: 21px;
+        line-height: 25px;
+    }
+}
+.details-references {
+    color: #000;
+    font-size: 14px;
+    line-height: 17px;
 }

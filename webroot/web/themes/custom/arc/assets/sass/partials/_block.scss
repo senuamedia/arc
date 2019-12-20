@@ -65,4 +65,17 @@
 /*=====Making an offer=====*/
 #block-makinganoffer {
     max-width: 539px;
+    padding-bottom: 25px;
+    .block-title {
+        margin-top: 60px;
+        margin-bottom: 30px;
+    }
+    .field--name-body {
+        font-size: 16px;
+        color: #000;
+        line-height: 19px;
+        a {
+            color: #a36d2f;
+        }
+    }
 }
