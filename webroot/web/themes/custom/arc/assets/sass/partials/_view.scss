@@ -1260,3 +1260,24 @@
         }
     }
 }
+/*===== Subtopic page=====*/
+.research-subtopic-arc {
+    padding-bottom: 55px;
+    .view-content {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .views-row {
+            max-width: calc(25% - 25px);
+            flex: 0 0 calc(25% - 25px);
+            margin-top: 40px;
+            .views-field-title {
+                margin-top: 20px;
+                color: #000;
+                font-size: 18px;
+                line-height: 22px;
+                font-weight: 600;
+            }
+        }
+    }
+}
