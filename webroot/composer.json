@@ -24,7 +24,7 @@
         "drupal/adminimal_theme": "^1.5",
         "drupal/bootstrap": "^3.20",
         "drupal/console": "^1.0.2",
-        "drupal/core-recommended": "^8.8",
+        "drupal/core-recommended": "^8.8.1",
         "drupal/ctools": "^3.2",
         "drupal/easy_breadcrumb": "^1.12",
         "drupal/entity_usage": "^2.0@beta",
@@ -43,13 +43,15 @@
         "drupal/wordpress_migrate": "^3.0",
         "drush/drush": "^9.0.0",
         "phpoffice/phpspreadsheet": "^1.10",
+        "symfony/filesystem": "^3.4",
+        "symfony/finder": "^3.4",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
         "zaporylie/composer-drupal-optimizations": "^1.0"
     },
     "require-dev": {
-        "webflo/drupal-core-require-dev": "^8.7.0"
+        "drupal/core-dev": "^8.8"
     },
     "conflict": {
         "drupal/drupal": "*"
