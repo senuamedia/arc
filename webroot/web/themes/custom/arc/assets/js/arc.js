@@ -9,6 +9,7 @@
         Drupal.arc.arcPhotosSlider();
         Drupal.arc.whatOurVolunteerSay(); 
         Drupal.arc.masonryPhotography();
+        Drupal.arc.attachmentBanner();
       });
     }
   };
@@ -36,7 +37,6 @@
       slidesToShow: 4,
       slidesToScroll: 1,
     });
-
   };
 
   Drupal.arc.whatOurVolunteerSay = function () {
@@ -68,6 +68,17 @@
       itemSelector: '.grid-item',
       columnWidth: 300
     });
+  };
+
+  Drupal.arc.attachmentBanner = function () {
+    var divContainer = $('.layout-main-wrapper.layout-container div.container div.region.region-content div.views-element-container div');
+    var hasAttachment= divContainer.find('div').hasClass('attachment-before');
+
+    if (hasAttachment) {
+      if ($('body').removeClass('attachment-banner')){
+        $('body').addClass('attachment-banner');
+      }
+    }
   };
 
 })(jQuery, Drupal);
