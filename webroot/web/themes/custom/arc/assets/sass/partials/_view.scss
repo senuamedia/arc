@@ -793,7 +793,82 @@
     }
 }
 .index-search-arc {
-    margin-top: 65px;
+    margin-top: 30px;
+    .view-header {
+        margin-bottom: 35px;
+        font-size: 24px;
+        color: #666;
+        line-height: 28px;
+    }
+    .view-content {
+        max-width: 833px;
+        .views-row {
+            font-size: 14px;
+            line-height: 17px;
+            color: #666;
+            margin-bottom: 55px;
+            .views-field-title {
+                font-size: 24px;
+                line-height: 29px;
+                color: #000;
+                font-weight: 600;
+                margin-bottom: 10px;
+                a {
+                    color: #000;
+                }
+            }
+            .views-field-nothing {
+                margin-bottom: 30px;
+                .views-field {
+                    display: inline-block;
+                }
+                .field-content a {
+                    color: #666;
+                    &::after {
+                        content: ',';
+                    }
+                    &:last-child::after {
+                        content: none;
+                    }
+                }
+            }
+        }
+    }
+    .pager-nav {
+        padding-right: 120px;
+        text-align: right;
+        float: right;
+        .pagination {
+            margin: 0;
+        }
+        .pager__item {
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: bold;
+            a {
+                background: transparent;
+                border: none;
+                color: #333;
+                padding: 6px 5px;
+            }
+            &.active a,
+            a:hover,
+            a:focus {
+                color: #a36d2f;
+            }
+        }
+    }
+    .view-footer {
+        float: right;
+        font-size: 24px;
+        line-height: 28px;
+        font-weight: 700;
+        padding: 6px 30px 6px 5px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        color: #333;
+    }
 }
 /*===== People =====*/
 .research-people-arc {
@@ -811,7 +886,8 @@
                 &.is-active {
                     color: #a36d2f;
                 }
-                &:hover {
+                &:hover,
+                &:focus {
                     color: #a36d2f;
                 }
             }
@@ -869,7 +945,8 @@
                 &.is-active {
                     color: #a36d2f;
                 }
-                &:hover {
+                &:hover,
+                &:focus {
                     color: #a36d2f;
                 }
             }
@@ -972,7 +1049,6 @@
     .view-footer {
         text-align: center;
         margin-top: 45px;
-        margin-bottom: 55px;
         a {
             padding: 19.5px 21px;
             background: #a36d2f;
@@ -984,15 +1060,15 @@
         }
     }
 }
-.multiple-paragraphs {
+.multiple-paragraphs,
+.multiple-paragraphs-second {
     max-width: 1230px;
-    margin: 0 auto;
-    padding-bottom: 60px;
+    margin: 55px auto;
     .views-row {
         .views-field-field-highlight {
             max-width: 550px;
             padding: 10px 0 10px 25px;
-            margin: 0 auto;
+            margin: 55px auto 0;
             font-size: 24px;
             line-height: 29px;
             color: #000;
@@ -1007,6 +1083,11 @@
                 top: 0;
                 position: absolute;
             }
+        }
+        .views-field-field-image {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
         }
         .views-field-field-title,
         .views-field-field-body-paragraph {
@@ -1080,19 +1161,6 @@
         }
     }
 }
-.multiple-paragraphs-second {
-    max-width: 1230px;
-    margin: 0 auto;
-    padding-top: 60px;
-    padding-bottom: 70px;
-    .views-field-field-body-paragraph {
-        max-width: 720px;
-        margin: 0 auto;
-        color: #000;
-        font-size: 16px;
-        line-height: 19px;
-    }
-}
 
 .block-views-blockgallery-block-1 {
     .block-title {
@@ -1152,23 +1220,43 @@
     .view-content {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         .views-row {
             max-width: 0 0 calc(25% - 25px);
             flex: 0 0 calc(25% - 25px);
+            margin-top: 40px;
+            &:first-child,
+            &:nth-child(2),
+            &:nth-child(3),
+            &:nth-child(4) {
+                margin-top: 0;
+            }
             .views-field-nothing {
-                padding-left: 15px;
+                padding: 20px 0 20px 15px;
                 background: #f5f5f5;
                 color: #000;
                 font-size: 14px;
                 line-height: 17px;
                 .views-field {
                     max-width: 235px;
+                    color: #000;
+                    line-height: 17px;
+                    font-size: 14px;
+                    a {
+                        color: #000;
+                    }
                 }
+                .views-field-title {
+                    font-size: 18px;
+                    line-height: 22px;
+                    margin-bottom: 15px;
+                    font-weight: 600;
+                }
+
             }
         }
     }
 }
-/*=====Council Archives=====*/
 
 /*=====Community Archives=====*/
 .community-archives-arc,
@@ -1278,6 +1366,39 @@
                 line-height: 22px;
                 font-weight: 600;
             }
+        }
+    }
+}
+/*=====Single video=====*/
+.single-video-collection  {
+    max-width: 720px;
+    margin: 0 auto;
+    .views-row {
+        margin-bottom: 55px;
+    }
+    .views-field-rendered-entity {
+        video, iframe {
+            width: 100%;
+        }
+    }
+    .views-field-name-1 {
+        margin-top: 20px;
+        color: #000;
+        font-size: 18px;
+        line-height: 22px;
+        font-weight: 600;
+    }
+}
+/*=====Single audio=====*/
+.single-audio-collection  {
+    max-width: 720px;
+    margin: 0 auto;
+    .views-row {
+        margin-bottom: 25px;
+    }
+    .views-field-rendered-entity {
+        audio {
+            width: 100%;
         }
     }
 }
