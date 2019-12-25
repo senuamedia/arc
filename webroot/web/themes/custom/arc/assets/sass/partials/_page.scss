@@ -299,7 +299,8 @@ body.attachment-banner .layout-main-wrapper {
 					display: none;
 				}
 				input {
-					width: 360px;
+					max-width: 360px;
+					width: 100%;
 					border: 1px solid rgb(219, 219, 219);
 					box-shadow: none;
 					background: #fff;
@@ -314,7 +315,8 @@ body.attachment-banner .layout-main-wrapper {
 			}
 			.form-actions {
 				button {
-					width: 360px;
+					max-width: 360px;
+					width: 100%;
 					box-shadow: none;
 					border: none;
 					border-radius: 0;
@@ -332,9 +334,9 @@ body.attachment-banner .layout-main-wrapper {
 .region-footer-bottom {
 	background: #2b2b27;
 	#block-producedbycityofparramatta {
-		max-width: 1200px;
+		max-width: 1230px;
 		margin: 0 auto;
-		padding: 20px 0;
+		padding: 20px 15px;
 		font-size: 18px;
 		color: #fff;
 		line-height: 23px;
@@ -631,4 +633,11 @@ ul.menu--research-menu {
 			}
 		}
 	}
+}
+
+body.page-node-type-article .banner-arc .views-field-nothing {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
 }
