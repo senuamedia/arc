@@ -15,7 +15,7 @@ body.attachment-banner .layout-main-wrapper {
 		padding: 0;
 	}
 }
-.banner {
+body:not(.path-frontpage) .banner {
 	.container-fluid {
 		padding: 0;
 		margin-top: 39px;
@@ -67,6 +67,7 @@ body.attachment-banner .layout-main-wrapper {
 					color: #fff;
 					font-size: 16px;
 					min-height: 70px;
+					font-weight: 600;
 					.caret {
 						transition: all 0.3s ease-in-out;
 						border-top-color: #042b49;
@@ -94,11 +95,11 @@ body.attachment-banner .layout-main-wrapper {
 					padding-left: calc((100% - 1200px)/2);
 					li {
 						display: inline-block;
-						font-size: 18px;
 						margin-right: 45px;
-						font-weight: 600;
 						a {
 							padding: 35px 0;
+							font-size: 18px;
+							font-weight: 600;
 							color: #042b49;
 						}
 					}
@@ -468,6 +469,9 @@ body:not(.path-frontpage) .content-highlight {
 			display: none;
 		}
 	}
+	input.form-file {
+		padding-left: 20px;
+	}
 	.webform-button--submit {
 		width: 100%;
 		background: #a36d2f;
@@ -640,4 +644,9 @@ body.page-node-type-article .banner-arc .views-field-nothing {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
+}
+body.page-node-type-article {
+	.content-bottom {
+		background: transparent;
+	}
 }

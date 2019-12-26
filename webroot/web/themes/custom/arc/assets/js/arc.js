@@ -10,6 +10,7 @@
         Drupal.arc.whatOurVolunteerSay(); 
         Drupal.arc.masonryPhotography();
         Drupal.arc.attachmentBanner();
+        Drupal.arc.backToTop();
       });
     }
   };
@@ -79,6 +80,20 @@
         $('body').addClass('attachment-banner');
       }
     }
+  };
+
+  Drupal.arc.backToTop = function () {
+    $(window).scroll(function() {
+      if ($(this).scrollTop()) {
+          $('.backtotop-wrapper #back-to-top').fadeIn();
+      } else {
+          $('.backtotop-wrapper #back-to-top').fadeOut();
+      }
+    });
+
+    $(".backtotop-wrapper #back-to-top").click(function() {
+      $("html, body").animate({scrollTop: 0}, 1000);
+    });
   };
 
 })(jQuery, Drupal);

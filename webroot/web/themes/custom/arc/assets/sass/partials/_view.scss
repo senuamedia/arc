@@ -16,9 +16,10 @@
         font-size: 18px;
         line-height: 22px;
         color: #fff;
-        top: 50px;
+        top: 50%;
         left: calc((100% - 1200px)/2);
         max-width: 660px;
+        transform: translate(0, -50%);
         .views-field-title,
         .views-field-name {
             margin-bottom: 25px;
@@ -31,7 +32,7 @@
     }
     .views-field-field-hero-image {
         img {
-            max-height: 254px;
+            min-height: 254px;
             width: 100%;
             object-fit: cover;
         }
@@ -82,6 +83,7 @@
         color: #000;
         font-weight: normal;
         margin-bottom: 30px;
+        margin-top: 0;
     }
 }
 .resources-for-what-we-do {
@@ -120,7 +122,7 @@
                 margin-top: 20px;
                 font-size: 16px;
                 line-height: 19px;
-                color: #706e6e;
+                color: #000;
             }
             .views-field-field-link-1 {
                 margin-top: 20px;
@@ -145,6 +147,9 @@
             max-height: 420px;
             object-fit: cover;
         }
+    }
+    .slick-dotted.slick-slider {
+        margin-bottom: 0;
     }
     .views-field-nothing {
         position: absolute;
@@ -205,6 +210,7 @@
         color: #000;
         font-weight: normal;
         margin-bottom: 30px;
+        margin-top: 0;
     }
 }
 .highlights-home-page {
@@ -235,6 +241,9 @@
             }
         }
     }
+}
+body.path-frontpage .highlights-home-page .view-header {
+    color: #000;
 }
 /*=====Research home page=====*/
 .block-views-blockresearch-block-1 {
@@ -447,9 +456,12 @@
             margin: 0 auto 25px;
             justify-content: space-between;
             background: #f7f7f7;
-            .views-field-field-video {
+            .views-field-field-videos {
                 flex: 0 0 38%;
                 max-width: 38%;
+                iframe {
+                    max-height: 250px;
+                }
             }   
             .views-field-nothing {
                 max-width: calc(62% - 25px);
@@ -909,8 +921,6 @@
     .attachment  {
         padding: 45px 0 50px;
         .view-content {
-            max-width: 839px;
-            margin: 0 auto;
             font-size: 24px;
             line-height: 29px;
             color: #000;
@@ -931,9 +941,7 @@
         max-width: 1230px;
         padding: 0 15px;
         margin: 0 auto;
-        &>.views-row {
-            margin-bottom: 50px;
-            .ui-accordion-header {
+            h3 {
                 border: none;
                 background: none;
                 color: #333;
@@ -946,10 +954,10 @@
                     display: none;
                 }
             }
-            .ui-accordion-content {
+            .views-row {
                 border: none;
                 padding: 0 0 0 15px;
-                .views-row {
+                .views-field-title {
                     font-size: 21px;
                     margin-top: 20px;
                     a {
@@ -960,7 +968,6 @@
                     }
                 }
             }
-        }
     }
 }
 /*===== Topic=====*/
@@ -968,8 +975,6 @@
     .attachment  {
         padding: 45px 0 50px;
         .view-content {
-            max-width: 839px;
-            margin: 0 auto;
             font-size: 24px;
             line-height: 29px;
             color: #000;
@@ -1007,13 +1012,20 @@
                     border: none;
                     background: none;
                     font-size: 21px;
-                    color: #666;
+                    color: #a36d2f;
                     line-height: 25px;
                     .ui-icon {
                         display: none;
                     }
                     a {
-                        color: #666;
+                        color: #a36d2f;
+                    }
+                    &.ui-state-active,
+                    &.ui-state-focus,
+                    &.ui-state-hover {
+                        a {
+                            text-decoration: underline;
+                        }
                     }
                 }
             }
@@ -1237,6 +1249,9 @@
 .block-views-blockreferences-block-1 {
     min-height: 171px;
     padding: 0 45px;
+    max-width: 840px;
+    background: #d0d0ce;
+    margin: 0 auto 25px;
     .block-title {
         margin: 25px 0;
         color: #000;
@@ -1310,8 +1325,6 @@
         max-width: 1230px;
         margin: 0 auto;
         .view-content {
-            max-width: 839px;
-            margin: 0 auto;
             font-size: 24px;
             line-height: 29px;
             color: #000;
@@ -1353,7 +1366,12 @@
                         display: none;
                     }
                     a {
-                        color: #666;
+                        color: #a36d2f;
+                    }
+                    &.ui-state-active a,
+                    a:hover, 
+                    a:focus {
+                            text-decoration: underline;
                     }
                 }
             }
@@ -1436,4 +1454,53 @@
             width: 100%;
         }
     }
+}
+/*=====Leave your feedback=====*/
+#block-webform-5 {
+    background: #d0d0ce;
+    max-width: 840px;
+    padding: 0 45px 45px;
+    margin: 0 auto 25px;
+    .block-title {
+        font-size: 21px;
+        line-height: 25px;
+        color: #000;
+        margin-bottom: 25px;
+    }
+}
+.webform-submission-form.webform-submission-leave-your-feedback-form {
+        .form-item {
+            label.control-label {
+                font-size: 16px;
+                line-height: 19px;
+                color: #ab7627;
+                margin-bottom: 8px;
+                &::after {
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    margin-left: 5px;
+                    width: 5px;
+                    height: 5px;
+                } 
+            }
+            input.form-control,
+            textarea.form-control,
+            select.form-control {
+                background: #fff;
+                border: 1px solid #a36d2f;
+                box-shadow: none;
+                border-radius: 3px;
+                width: 100%;
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+        }
+        .webform-button--submit,
+        .form-group.form-actions {
+            margin-bottom: 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
 }
