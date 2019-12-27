@@ -11,6 +11,7 @@
         Drupal.arc.masonryPhotography();
         Drupal.arc.attachmentBanner();
         Drupal.arc.backToTop();
+        Drupal.arc.soundCollections();
       });
     }
   };
@@ -32,12 +33,20 @@
 
   Drupal.arc.arcPhotosSlider = function () {
     var slider = $('.photos-slider .view-content');
-    slider.slick({
-      infinite: true,
-      arrows : true,
-      slidesToShow: 4,
-      slidesToScroll: 1,
-    });
+    var sld = $('div.content-top .photos-slider');
+    if (slider) { 
+      slider.slick({
+        infinite: true,
+        arrows : true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        centerMode: true,
+      });
+
+      if (sld.hasClass("photos-slider")){
+        $("body").addClass("photos-detail");
+      }
+    }
   };
 
   Drupal.arc.whatOurVolunteerSay = function () {
@@ -93,6 +102,29 @@
 
     $(".backtotop-wrapper #back-to-top").click(function() {
       $("html, body").animate({scrollTop: 0}, 1000);
+    });
+  };
+
+  Drupal.arc.soundCollections = function () {
+    var rows = $("div.sound-collections .view-content .views-row");
+
+    rows.on("click", ".views-field-field-image", function() {
+      var row = $(this).closest(".views-row");
+      var audio = row.find("audio");
+
+      audio.on('ended', function() {
+        audio.removeClass("playing");
+      });
+      
+      if (!audio.hasClass("playing") || audio.hasClass("paused")) {
+        audio.get(0).play();
+        audio.removeClass("paused");
+        audio.addClass("playing");
+      } else {
+        audio.get(0).pause();
+        audio.removeClass("playing");
+        audio.addClass("paused");
+      }
     });
   };
 
