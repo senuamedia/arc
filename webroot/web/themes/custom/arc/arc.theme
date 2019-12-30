@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\views\ViewExecutable;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements template_preprocess
@@ -16,5 +17,14 @@ function arc_preprocess(&$variables) {
         $result = str_replace('@keyword', $keyword, $result);
       }
     }
+  }
+}
+
+function arc_preprocess_html(&$variables) {
+  $variables['path_info']['args'] = FALSE;
+  $path = \Drupal::request()->getPathInfo();
+  $path_args = explode('/', $path);
+  if (count($path_args) >= 2) {
+    $variables['path_info']['args'] = Html::cleanCssIdentifier(ltrim($path, '/'));
   }
 }

@@ -8,14 +8,15 @@ body.path-frontpage {
 .content-bottom {
 	background: /*#ededdc*/#d0d0ce;
 }
-body.attachment-banner .layout-main-wrapper {
+body.attachment-banner .layout-main-wrapper,
+body.photos-detail .content-top {
 	.container {
 		max-width: 100%;
 		margin: 0 auto;
 		padding: 0;
 	}
 }
-.banner {
+body:not(.path-frontpage) .banner {
 	.container-fluid {
 		padding: 0;
 		margin-top: 39px;
@@ -67,6 +68,7 @@ body.attachment-banner .layout-main-wrapper {
 					color: #fff;
 					font-size: 16px;
 					min-height: 70px;
+					font-weight: 600;
 					.caret {
 						transition: all 0.3s ease-in-out;
 						border-top-color: #042b49;
@@ -83,6 +85,12 @@ body.attachment-banner .layout-main-wrapper {
 						}
 					}
 				}
+				/*&:hover {
+					margin-bottom: 105px;
+				}
+				&:hover .dropdown-menu {
+					display: block;
+				}*/
 				.dropdown-menu {
 					width: 100%;
 					box-shadow: none;
@@ -94,11 +102,11 @@ body.attachment-banner .layout-main-wrapper {
 					padding-left: calc((100% - 1200px)/2);
 					li {
 						display: inline-block;
-						font-size: 18px;
 						margin-right: 45px;
-						font-weight: 600;
 						a {
 							padding: 35px 0;
+							font-size: 18px;
+							font-weight: 600;
 							color: #042b49;
 						}
 					}
@@ -405,17 +413,27 @@ body:not(.path-frontpage) .content-highlight {
 }
 .webform-submission-contact-enquiries-form,
 .webform-submission-form {
-	#edit-processed-text {
+	#edit-processed-text,
+	#edit-donation-form-discription,
+	#edit-volunteer-form-discription {
 		line-height: 19px;
 		color: #000;
 		& * {
-			margin-bottom: 25px;
+			margin-bottom: 20px;
 			font-size: 16px;
 			&:nth-child(2) {
 				margin-bottom: 20px;
 				font-size: 14px;
 				line-height: 17px;
 			}
+			&:nth-child(2),
+			&:nth-child(4) {
+				display: inline-block;
+			}
+		}
+		& .icon {
+			display: inline-block;
+			color: #ee0000;
 		}
 	}
 	.webform-email-confirm--wrapper,
@@ -428,6 +446,10 @@ body:not(.path-frontpage) .content-highlight {
 		.panel-body {
 			padding: 0;
 		}
+	}
+	input.form-control,
+	textarea.form-control {
+		padding-left: 15px;
 	}
 	input.form-control,
 	textarea.form-control,
@@ -454,6 +476,27 @@ body:not(.path-frontpage) .content-highlight {
 			height: 5px;
 		} 
 	}
+	.webform-select-other {
+		label.sr-only {
+			position: relative;
+			display: inline-block;
+			margin: 0 0 8px 0;
+			height: 19px;
+			width: auto;
+		}
+		.webform-select-other-input {
+			display: flex ;
+			align-items: center;
+			label.control-label {
+				margin-right: 15px;
+				margin-bottom: 0;
+			}
+			input.form-control {
+				display: inline-block;
+				max-width: calc(100% - 63px);
+			}
+		}
+	}
 	select.form-control {
 		padding-left: 20px;
 		font-size: 16px;
@@ -468,6 +511,9 @@ body:not(.path-frontpage) .content-highlight {
 			display: none;
 		}
 	}
+	input.form-file {
+		padding-left: 20px;
+	}
 	.webform-button--submit {
 		width: 100%;
 		background: #a36d2f;
@@ -478,6 +524,13 @@ body:not(.path-frontpage) .content-highlight {
 		padding: 17.5px 10px;
 		margin-bottom: 55px;
 		font-weight: bold;
+	}
+	.form-item-personal-and-professional-reference,
+	.form-item-personal-and-professional-reference-2,
+	.form-item-area-of-interest {
+		input.form-text {
+			min-height: 63px;
+		}
 	}
 }
 #edit-your-details {
@@ -508,7 +561,7 @@ body:not(.path-frontpage) .content-highlight {
 		label {
 			color: #000;
 			line-height: 19px;
-			align-self: center;
+			margin-top: 9px;
 			margin-bottom: 0;
 		}
 		.form-control {
@@ -635,9 +688,15 @@ ul.menu--research-menu {
 	}
 }
 
-body.page-node-type-article .banner-arc .views-field-nothing {
+body.page-node-type-article .banner-arc .views-field-nothing,
+body.path-contact .banner-arc .views-field-nothing {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
+}
+body.page-node-type-article {
+	.content-bottom {
+		background: transparent;
+	}
 }
