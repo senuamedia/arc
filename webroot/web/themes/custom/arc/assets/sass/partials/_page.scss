@@ -20,6 +20,10 @@ body:not(.path-frontpage) .banner {
 	.container-fluid {
 		padding: 0;
 		margin-top: 39px;
+		.block-search-mobile {
+			padding: 0 15px;
+			margin-bottom: 60px;
+		}
 	}
 }
 .dialog-off-canvas-main-canvas {
@@ -48,12 +52,13 @@ body:not(.path-frontpage) .banner {
 	max-width: 1230px;
 	width: 100%;
 }
-.navbar-collapse.collapse  {
+.navbar-collapse  {
 	//padding-bottom: 100px;
 	position: relative;
 	margin-left: auto;
 	max-width: 900px;
 	display: block;
+	float: right;
 	#block-searchheader {
 		position: absolute;
 		width: 100%;
@@ -106,6 +111,7 @@ body:not(.path-frontpage) .banner {
 						a {
 							padding: 35px 0;
 							font-size: 18px;
+							line-height: 22px;
 							font-weight: 600;
 							color: #042b49;
 						}
@@ -170,7 +176,6 @@ body:not(.path-frontpage) .banner {
 				width: 60px;
 				top: 0;
 				right: 0;
-				
 			}
 		}
 		.search-text {
@@ -369,9 +374,16 @@ body:not(.path-frontpage) .banner {
 		padding: 8px 15px;
 		color: #000;
 		font-size: 14px;
+		white-space: nowrap;
+		display: flex;
 		li + li::before {
 			content: '>';
 			color: #000;
+		}
+		li:last-child {
+			max-width: 200px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		.active {
 			color: #000;
@@ -566,7 +578,7 @@ body:not(.path-frontpage) .content-highlight {
 		}
 		.form-control {
 			display: inline-block;
-			width: 350px;
+			max-width: 350px;
 			padding: 0 15px;
 			border-color: #fff;
 			&:focus {

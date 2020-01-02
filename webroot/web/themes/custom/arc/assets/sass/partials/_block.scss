@@ -158,3 +158,64 @@
         line-height: 22px;
     }
 }
+/*=====block search mobile=====*/
+.block-search-mobile {
+    display: none;
+    .search-show {
+        position: relative;
+        margin-top: 15px;
+        & > * {
+            height: 60px;
+        }
+        input {
+            width: 100%;
+            padding-left: 20px;
+            box-shadow: none;
+            border: 1px solid #dbdbdb;
+            &::placeholder {
+                font-size: 18px;
+                line-height: 22px;
+                color: #ababab;
+            }
+        }
+        button {
+            background: url('../images/arrow-right.svg') no-repeat center;
+            background-size: 30px;
+            background-color: #525252;
+            border: 1px solid #525252;
+            box-shadow: none;
+            font-size: 0;
+            position: absolute;
+            width: 72px;
+            top: 0;
+            right: 0;
+        }
+    }
+    .title-text {
+        margin-top: 15px;
+        font-size: 16px;
+        line-height: 19px;
+        color: #444;
+    }
+    .search-text {
+        margin-top: 15px;
+        font-size: 16px;
+        line-height: 19px;
+        a {
+            color: #666;
+            padding: 11.5px 21px;
+            display: inline-block;
+            background: #f0f0ed;
+            border-radius: 100px;
+            &:focus,
+            &:active {
+                text-decoration: none;
+                background: #a36d2f;
+                color: #fff;
+            }
+        }
+        & ~ .search-text {
+            margin-top: 8px;
+        }
+    }
+}

@@ -12,7 +12,12 @@
         Drupal.arc.attachmentBanner();
         Drupal.arc.backToTop();
         Drupal.arc.soundCollections();
+        Drupal.arc.mobileMenu();
       });
+
+      // $(window).on('resize', function() {
+      //   Drupal.arc.mobileMenu();
+      // });
     }
   };
 
@@ -71,7 +76,7 @@
   };
 
   Drupal.arc.masonryPhotography = function () {
-    var grid = $('#block-views-block-gallery-block-1 .views-field-field-photos div');
+    var grid = $('.details-gallery');
     var gridItem = grid.find('div[class="grid-item"]');
     
     grid.masonry({
@@ -126,6 +131,24 @@
         audio.addClass("paused");
       }
     });
+  };
+
+  Drupal.arc.mobileMenu = function () {
+    var width = $(window).width();
+    var header = $("header");
+    if (width <= 991) {
+      var buttonMenu = $("header div.navbar-header button.navbar-toggle");
+      buttonMenu.click(function() {
+        if (header.hasClass("mobile-menu")) {
+          header.removeClass("mobile-menu");
+        } else {
+          header.addClass("mobile-menu");
+        }
+      });
+    }
+    //  else {
+    //   header.removeClass("mobile-menu");
+    // }
   };
 
 })(jQuery, Drupal);
