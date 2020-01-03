@@ -41,7 +41,7 @@
     .art-works-collections-attachment,
     .civic-collections-attachment,
     .cultural-collections-attachment {
-        .views-field-name, .views-field-nothing {
+        .views-field-nothing {
             left: 15px;
         }
     }
@@ -64,6 +64,9 @@
         //background: #d0d0ce;
         max-width: 100%;
         max-height: 100%;
+        transition-property: height, visibility;
+        transition-duration: 0.35s;
+        transition-timing-function: ease;
         .search-header {
             display: block;
         }
@@ -219,7 +222,9 @@
         .views-field-nothing {
             left: 50%;
             transform: translate(-50%, -50%);
-            .views-field-title ~ * {
+            width: 100%;
+            text-align: center;
+            .views-field-title ~ *, .views-field-name ~ * {
                 display: none;
             }
         }
@@ -233,10 +238,15 @@
     .art-works-collections-attachment,
     .civic-collections-attachment,
     .cultural-collections-attachment {
-        .views-field-name, .views-field-nothing {
+        .views-field-nothing {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+        }
+        .views-field-name ~ * {
+            display: none;
         }
     }
     /*=====What we do home page=====*/
@@ -291,6 +301,17 @@
                         margin-bottom: 40px;
                     }
                 }
+                #block-webform-3 {
+                    .form-item, .form-actions {
+                        justify-content: flex-start;
+                    }
+                    .form-actions {
+                        .webform-button--submit {
+                            margin-right: 0;
+                            margin-left: 120px;
+                        }
+                    }
+                }
             }
         }
     }
@@ -317,6 +338,66 @@
                 margin-top: 40px;
                 &:first-child, &:nth-child(2) {
                     margin-top: 0;
+                }
+            }
+        }
+    }
+    /*=====Photo detail=====*/
+    .research-banner {
+        .view-content {
+            flex-wrap: wrap;
+            .views-row {
+                max-width: 50%;
+                flex: 0 0 50%;
+                margin-top: 40px;
+                &:first-child,
+                &:nth-child(2) {
+                    margin-top: 0;
+                }
+                .views-field-field-photos {
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    /*=====Published=====*/
+    .published-arc {
+        .view-content {
+            flex-wrap: wrap;
+            .views-row {
+                max-width: calc(50% - 12.5px);
+                flex: 0 0 calc(50% - 12.5px);
+                margin-top: 40px;
+                &:first-child, &:nth-child(2) {
+                    margin-top: 0;
+                }
+                .views-field-field-thumbnail {
+                    img {
+                        width: 100%;
+                    }
+                }
+                .views-field-description__value {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+    /*=====Published detail=====*/
+    .published-detail-arc {
+        .view-content {
+            flex-wrap: wrap;
+            .views-row {
+                max-width: calc(50% - 12.5px);
+                flex: 0 0 calc(50% - 12.5px);
+                &:nth-child(3), &:nth-child(4) {
+                    margin-top: 40px;
+                }
+                .views-field-field-image {
+                    img {
+                        width: 100%;
+                    }
                 }
             }
         }
@@ -369,6 +450,30 @@
                 }
                 &:first-child, &:nth-child(2) {
                     margin-top: 0;
+                }
+            }
+        }
+    }
+    /*=====Video collections=====*/
+    .video-collections {
+        & > .view-content {
+            .views-row {
+                flex-wrap: wrap;
+                .views-field-field-videos {
+                    max-width: 100%;
+                    flex: 0 0 100%;
+                    video {
+                        display: flex;
+                        margin: 0 auto;
+                    }
+                    iframe {
+                        width: 100%;
+                    }
+                }
+                .views-field-nothing {
+                    max-width: 100%;
+                    flex: 0 0 100%;
+                    padding: 0 15px;
                 }
             }
         }
@@ -454,6 +559,46 @@
         font-size: 22px;
         line-height: 27px;
     }
+    /*=====Photo detail=====*/
+    .research-banner {
+        .view-content {
+            .views-row {
+                max-width: 100%;
+                flex: 0 0 100%;
+                &:nth-child(2) {
+                    margin-top: 40px;
+                }
+            }
+        }
+    }
+    /*=====Published=====*/
+    .published-arc {
+        .view-content {
+            .views-row {
+                max-width: 100%;
+                flex: 0 0 100%;
+                margin-top: 40px;
+                &:nth-child(2) {
+                    margin-top: 40px;
+                }
+                .views-field-description__value {
+                    min-height: auto;
+                }
+            }
+        }
+    }
+    /*=====Published detail=====*/
+    .published-detail-arc {
+        .view-content {
+            .views-row {
+                max-width: 100%;
+                flex: 0 0 100%;
+                &:nth-child(2) {
+                    margin-top: 40px;
+                }
+            }
+        }
+    }
 }
 // 575
 @media (max-width: 575px) {
@@ -496,6 +641,14 @@
                     margin-bottom: 40px;
                     padding: 0 15px;
                 }
+            }
+        }
+    }
+    /*=====Breadcum research=====*/
+    .menu--research-menu.nav {
+        &>li {
+            &>a {
+                padding: 10px;
             }
         }
     }

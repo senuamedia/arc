@@ -742,7 +742,7 @@ body.path-volunteer {
             font-size: 14px;
             line-height: 17px;
             &>.views-field {
-                padding-left: 15px;
+                padding: 0 15px;
             }
             .views-field-name {
                 font-size: 18px;
@@ -759,10 +759,10 @@ body.path-volunteer {
                 margin-top: 20px;
                 margin-bottom: 40px;
                 max-width: 338px;
-                min-height: 150px;
+                min-height: 175px;
             }
             .views-field-field-thumbnail {
-                padding-left: 0;
+                padding: 0;
             }
             .views-field-nothing {
                 margin-top: 23px;
@@ -1040,7 +1040,7 @@ body.path-volunteer {
 /*===== Topic=====*/
 .research-topic-arc {
     .attachment  {
-        padding: 45px 0 50px;
+        padding: 45px 15px 50px;
         .view-content {
             font-size: 24px;
             line-height: 29px;
@@ -1297,7 +1297,7 @@ body.path-volunteer {
     }
 }
 
-.block-views-blockgallery-block-1 {
+.block-views-blockgallery-photography-block-1 {
     padding-top: 65px;
     .block-title {
         max-width: 720px;
@@ -1360,7 +1360,7 @@ body.path-volunteer {
         justify-content: space-between;
         flex-wrap: wrap;
         .views-row {
-            max-width: 0 0 calc(25% - 25px);
+            max-width: calc(25% - 25px);
             flex: 0 0 calc(25% - 25px);
             margin-top: 40px;
             &:first-child,
@@ -1370,7 +1370,7 @@ body.path-volunteer {
                 margin-top: 0;
             }
             .views-field-nothing {
-                padding: 20px 0 20px 15px;
+                padding: 20px 15px;
                 background: #f5f5f5;
                 color: #000;
                 font-size: 14px;

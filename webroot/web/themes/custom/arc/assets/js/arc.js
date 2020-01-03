@@ -15,9 +15,9 @@
         Drupal.arc.mobileMenu();
       });
 
-      // $(window).on('resize', function() {
-      //   Drupal.arc.mobileMenu();
-      // });
+      $(document).on("resize", function() {
+        Drupal.arc.mobileMenu();
+      });
     }
   };
 
@@ -76,12 +76,13 @@
   };
 
   Drupal.arc.masonryPhotography = function () {
-    var grid = $('.details-gallery');
+    var grid = $('.details-gallery div.view-content');
     var gridItem = grid.find('div[class="grid-item"]');
     
     grid.masonry({
       itemSelector: '.grid-item',
-      columnWidth: 300
+      columnWidth: 300,
+      percentPosition: true
     });
   };
 
@@ -137,13 +138,13 @@
     var width = $(window).width();
     var header = $("header");
     if (width <= 991) {
-      var buttonMenu = $("header div.navbar-header button.navbar-toggle");
-      buttonMenu.click(function() {
-        if (header.hasClass("mobile-menu")) {
-          header.removeClass("mobile-menu");
-        } else {
-          header.addClass("mobile-menu");
-        }
+      var buttonMenu = $("header .collapse");
+      buttonMenu.on("show.bs.collapse", function() {
+        header.addClass("mobile-menu");
+      });
+
+      buttonMenu.on("hide.bs.collapse", function() {
+        header.removeClass("mobile-menu");
       });
     }
     //  else {
