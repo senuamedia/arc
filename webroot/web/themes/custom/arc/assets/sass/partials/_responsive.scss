@@ -224,6 +224,7 @@
             transform: translate(-50%, -50%);
             width: 100%;
             text-align: center;
+            padding: 0 15px;
             .views-field-title ~ *, .views-field-name ~ * {
                 display: none;
             }
@@ -243,11 +244,21 @@
             top: 50%;
             transform: translate(-50%, -50%);
             width: 100%;
+            padding: 0 15px;
             text-align: center;
         }
         .views-field-name ~ * {
             display: none;
         }
+    }
+
+    .community-archives-attachment,
+    .council-archives-attachment,
+    .archaeology-collections-attachment,
+    .art-works-collections-attachment,
+    .civic-collections-attachment,
+    .cultural-collections-attachment {
+        margin-bottom: 0;
     }
     /*=====What we do home page=====*/
     .resources-for-what-we-do {
@@ -278,6 +289,16 @@
                 max-width: 100%;
                 flex: 0 0 100%;
                 margin-top: 30px;
+            }
+        }
+    }
+    /*=====Thumbnail-collections=====*/
+    .thumbnail-collections {
+        max-width: 100%;
+        .view-content {
+            .views-row {
+                max-width: calc(33.333% - 7.5px);
+                flex: 0 0 calc(33.333% - 7.5px);
             }
         }
     }
@@ -442,8 +463,8 @@
         .view-content {
             flex-wrap: wrap;
             .views-row {
-                max-width: calc(50% - 15px);
-                flex: 0 0 calc(50% - 15px);
+                max-width: calc(50% - 7.5px);
+                flex: 0 0 calc(50% - 7.5px);
                 margin-top: 40px;
                 .views-field-field-thumbnail {
                     width: 100%;
@@ -649,6 +670,14 @@
         &>li {
             &>a {
                 padding: 10px;
+            }
+        }
+    }
+    /*=====Share this=====*/
+    .block-addtoany-block {
+        .addtoany_list {
+            a {
+                padding: 0 8px;
             }
         }
     }

@@ -13,6 +13,7 @@
         Drupal.arc.backToTop();
         Drupal.arc.soundCollections();
         Drupal.arc.mobileMenu();
+        Drupal.arc.topicSubTerm();
       });
 
       $(document).on("resize", function() {
@@ -45,7 +46,7 @@
         arrows : true,
         slidesToShow: 4,
         slidesToScroll: 1,
-        centerMode: true,
+        touchMove: true
       });
 
       if (sld.hasClass("photos-slider")){
@@ -150,6 +151,19 @@
     //  else {
     //   header.removeClass("mobile-menu");
     // }
+  };
+
+  Drupal.arc.topicSubTerm = function () {
+    var rows = $(".research-topic-arc .view-content .views-row").find(".term-relation").filter("[ptid!='']");
+
+    rows.each(function() {
+      var ptid = $(this).attr("ptid");
+      var currentRow = $(this).closest("div.views-row");
+      var content = $(this).closest("div.view-content");
+      var parent = content.find(".term-child").filter("[tid=" + ptid + "]");
+      console.log(parent);
+      $(currentRow).detach().appendTo(parent);
+    });
   };
 
 })(jQuery, Drupal);

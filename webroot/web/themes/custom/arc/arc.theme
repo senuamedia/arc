@@ -28,3 +28,37 @@ function arc_preprocess_html(&$variables) {
     $variables['path_info']['args'] = Html::cleanCssIdentifier(ltrim($path, '/'));
   }
 }
+
+// function arc_preprocess_breadcrumb(&$variables) {
+
+//   $variables['#cache']['contexts'][] = 'url.path';
+//   $node = \Drupal::routeMatch()->getParameter('node');
+
+//   // var_dump($node); exit;
+//   // kint($node); exit;
+//   // kint($node->get('field_breadcrumbs')); exit;
+//   // kint($node); exit;
+//   if(isset($node)){
+//     if ($node->hasField('field_breadcrumbs')){
+//       $variables['breadcrumb'] = $node->get('field_breadcrumbs');
+//     };
+//   };
+
+//   $renderable = [
+//     '#theme' => 'arc_breadcrumb',
+//     '#breadcrumb' => $GLOBALS['breadcrumb_arr'],
+//   ];
+  
+//   $rendered = \Drupal::service('renderer')->render($renderable);
+//   $node->set('field_breadcrumbs', ['value' => $rendered, 'format' => 'full_html']);
+// }
+
+// function arc_breadcrumb_theme($existing, $type, $theme, $path){
+//   return  [
+//     'arc_breadcrumb' => [
+//       'variables' => [
+//         'breadcrumb' => NULL,
+//       ],
+//     ],
+//   ];
+// }
