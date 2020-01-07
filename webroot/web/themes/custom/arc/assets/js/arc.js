@@ -13,11 +13,14 @@
         Drupal.arc.backToTop();
         Drupal.arc.soundCollections();
         Drupal.arc.mobileMenu();
-        Drupal.arc.topicSubTerm();
       });
 
       $(document).on("resize", function() {
         Drupal.arc.mobileMenu();
+      });
+
+      $(document).ready(function() {
+        Drupal.arc.topicSubTerm();
       });
     }
   };
@@ -78,11 +81,14 @@
 
   Drupal.arc.masonryPhotography = function () {
     var grid = $('.details-gallery div.view-content');
+    if (!grid.find("div.grid-sizer").length) {
+      grid.prepend('<div class="grid-sizer"></div>');
+    }
     var gridItem = grid.find('div[class="grid-item"]');
     
     grid.masonry({
       itemSelector: '.grid-item',
-      columnWidth: 300,
+      columnWidth: '.grid-sizer',
       percentPosition: true
     });
   };
@@ -161,7 +167,6 @@
       var currentRow = $(this).closest("div.views-row");
       var content = $(this).closest("div.view-content");
       var parent = content.find(".term-child").filter("[tid=" + ptid + "]");
-      console.log(parent);
       $(currentRow).detach().appendTo(parent);
     });
   };

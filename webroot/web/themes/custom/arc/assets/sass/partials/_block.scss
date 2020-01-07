@@ -87,7 +87,7 @@
     background: #d0d0ce;
     max-width: 840px;
     padding: 0 45px 45px;
-    margin: 0 auto 25px;
+    margin: 25px auto;
     .block-title {
         font-size: 21px;
         line-height: 25px;
@@ -217,11 +217,5 @@
         & ~ .search-text {
             margin-top: 8px;
         }
-    }
-}
-/*=====Block partner img=====*/
-#block-partnerimage {
-    img {
-        width: 100%;
     }
 }
