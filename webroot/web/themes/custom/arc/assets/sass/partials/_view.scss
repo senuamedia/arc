@@ -1142,16 +1142,16 @@ body.path-volunteer {
     }
 }
 .photos-slider {
-    .slick-track  {
+    /*.slick-track  {
         display: flex;
         justify-content: space-between;
-        /*margin: 0 -12.5px;*/
+        margin: 0 -12.5px;
         .slick-slide {
             max-width: calc(277px + 25px);
             flex: 0 0 calc(277px + 25px);
-            /*max-width: 302px;*/
-            /*flex: 0 0 302px;
-            padding: 0 12.5px;*/
+            max-width: 302px;
+            flex: 0 0 302px;
+            padding: 0 12.5px;
         }
         .views-row {
             .views-field-thumbnail__alt {
@@ -1163,7 +1163,7 @@ body.path-volunteer {
                 text-decoration: underline;
             }
         }
-    }
+    }*/
     .slick-arrow {
         width: 60px;
         height: 60px;

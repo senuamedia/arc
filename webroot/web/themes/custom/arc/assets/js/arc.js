@@ -49,7 +49,30 @@
         arrows : true,
         slidesToShow: 4,
         slidesToScroll: 1,
-        touchMove: true
+        responsive: [{
+           breakpoint: 991,
+           settings: {
+              touchMove: true,
+              slidesToShow: 3,
+              slidesToScroll: 1
+           }
+        },{
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            touchMove: true,
+          }
+        },
+        {
+           breakpoint: 400,
+           settings: {
+              arrows: false,
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              touchMove: true,
+           }
+        }]
       });
 
       if (sld.hasClass("photos-slider")){
@@ -89,7 +112,7 @@
     grid.masonry({
       itemSelector: '.grid-item',
       columnWidth: '.grid-sizer',
-      percentPosition: true
+      percentPosition: true,
     });
   };
 
