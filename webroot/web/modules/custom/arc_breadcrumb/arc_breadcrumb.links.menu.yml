@@ -1,0 +1,6 @@
+arc_breadcrumb.update_breadcrumb:
+  title: Arc Breacrumb
+  route_name: arc_breadcrumb.update_breadcrumb
+  description: Update Breadcrumb
+  parent: system.admin_config
+  weight: 101

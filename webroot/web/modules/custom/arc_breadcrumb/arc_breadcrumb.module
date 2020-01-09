@@ -1,0 +1,238 @@
+<?php
+
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity;
+use Drupal\node\Entity\Term;
+use Drupal\Core\Entity\EntityInterface;
+
+$breadcrumb_arr = [];
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function arc_breadcrumb_entity_presave( $entity) {
+  if ($entity->getEntityTypeId() == 'node'){
+    _arc_breadcrumb_update_breadcrumb($entity);
+  }
+}
+
+/**
+ * Function: add link to breadcrumb 
+ */
+function _arc_breadcrumb_process($node, $field_name){
+  if ($node->hasField($field_name)){
+    $field = $node->get($field_name)->getValue();
+    if (count($field)){
+      $tid = $field[0]['target_id'];
+      $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+
+      if (isset($term)){
+        if($term->hasField('field_related_categories')){
+
+          $first_properties_obj = $term->get('field_related_categories')->first();
+          if (isset($first_properties_obj)){
+            $tid_group_obj = $first_properties_obj->getValue();
+            $tid_group = $tid_group_obj['target_id'];
+            $term_group = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid_group);
+            $term_group_name = $term_group->getName();
+            $term_group_url = $term_group->url();
+            array_push($GLOBALS['breadcrumb_arr'], ['url' => $term_group_url, 'text' => $term_group_name]);
+          };
+        };
+
+        $term_name = $term->getName();
+        $term_url = $term->url();
+        array_push($GLOBALS['breadcrumb_arr'], ['url' => $term_url, 'text' => $term_name]);
+      };
+    }
+  }
+}
+
+/**
+ * Function: overide breadcrumb, render and import to field_breadcrumb.
+ */
+function _arc_breadcrumb_update_breadcrumb( $node) {
+
+  if ($node->hasField('field_breadcrumbs')){
+    $GLOBALS['breadcrumb_arr'] = [
+      ['url' => '/', 'text' => 'Home'],
+    ];
+
+    if ($node->hasField('field_section')){
+      $field_section = $node->get('field_section')->getValue();
+      if (count($field_section)){
+        $tid = $field_section[0]['target_id'];
+        $term_section = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+        if (isset($term_section)){
+
+          $term_section_name = $term_section->getName();
+          $term_section_url = $term_section->url();
+
+          //get url of page has title = $term_section_name from menu.
+          $menu_name = 'main';
+          $menu_tree = \Drupal::menutree();
+          $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+          $tree = $menu_tree->load('main', $parameters);
+          $manipulators = array(
+            array('callable' => 'menu.default_tree_manipulators:checkAccess'),
+            array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
+          );
+          $tree = $menu_tree->transform($tree, $manipulators);
+          // Finally, build a renderable array from the transformed tree.
+          $menu_tmp = $menu_tree->build($tree);
+          $menu = array();
+          foreach ($menu_tmp['#items'] as $item) {
+            if ($item['title'] == $term_section_name) {
+              $menu = ['url' => $item['url']->toString(), 'text' => $term_section_name];
+            };
+          };
+          if (count($menu)){
+            array_push($GLOBALS['breadcrumb_arr'], $menu);
+          };
+        }
+      } 
+    }
+    
+    //Add link to term and link to term-group into breadcrum_array
+    //pority: category_1 > category_2 > category_3
+    if ($node->hasField('field_category_1')){
+      $field = $node->get('field_category_1')->getValue();
+      if (count($field)){
+        _arc_breadcrumb_process($node, 'field_category_1');
+      }
+      else{
+        if ($node->hasField('field_category_2')){
+          $field = $node->get('field_category_2')->getValue();
+          if (count($field)){
+            _arc_breadcrumb_process($node, 'field_category_2');
+          }
+          else{
+            if ($node->hasField('field_category_3')){
+              $field = $node->get('field_category_3')->getValue();
+              if (count($field)){
+                _arc_breadcrumb_process($node, 'field_category_3');
+              }
+            }
+          }
+        }
+      }
+    }
+    else{
+      if ($node->hasField('field_category_2')){
+        $field = $node->get('field_category_2')->getValue();
+        if (count($field)){
+          _arc_breadcrumb_process($node, 'field_category_2');
+        }
+        else{
+          if ($node->hasField('field_category_3')){
+            $field = $node->get('field_category_3')->getValue();
+            if (count($field)){
+              _arc_breadcrumb_process($node, 'field_category_3');
+            }
+          }
+        }
+      }
+      else{
+        if ($node->hasField('field_category_3')){
+          $field = $node->get('field_category_3')->getValue();
+          if (count($field)){
+            _arc_breadcrumb_process($node, 'field_category_3');
+          }
+        }
+      }
+    };
+
+    // $field_category_1 = $node->get('field_category_1')->getValue();
+    // if (count($field_category_1)){
+    //   // var_dump("in field_category_1"); exit;
+    //   $tid = $field_category_1[0]['target_id'];
+    //   $term_category_1 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+
+    //   if (isset($term_category_1)){
+    //     if($term_category_1->hasField('field_related_categories')){
+
+    //       $tid_group_obj = $term_category_1->get('field_related_categories')->first()->getValue();
+    //       $tid_group = $tid_group_obj['target_id'];
+
+    //       if (isset($tid_group)){
+    //         $term_group = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid_group);
+    //         $term_group_name = $term_group->getName();
+    //         $term_group_url = $term_group->url();
+    //         array_push($breadcrumb_arr, ['url' => $term_group_url, 'text' => $term_group_name]);
+    //       };
+    //     };
+
+    //     $term_category_1_name = $term_category_1->getName();
+    //     $term_category_1_url = $term_category_1->url();
+    //     array_push($breadcrumb_arr, ['url' => $term_category_1_url, 'text' => $term_category_1_name]);
+    //   };
+    // }
+    // else{
+    //   $field_category_2 = $node->get('field_category_2')->getValue();
+    //   $tid = $field_category_2[0]['target_id'];
+    //   $term_category_2 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+
+    //   if (count($field_category_2)){
+    //     if($term_category_2->hasField('field_related_categories')){
+    //       $first_properties_obj = $term_category_2->get('field_related_categories')->first();
+    //       if ($first_properties_obj){
+    //         $tid_group_obj = $first_properties_obj->getValue();
+    //         $tid_group = $tid_group_obj['target_id'];
+    //         $term_group = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid_group);
+    //         $term_group_name = $term_group->getName();
+    //         $term_group_url = $term_group->url();
+    //         array_push($breadcrumb_arr, ['url' => $term_group_url, 'text' => $term_group_name]);
+    //       };
+    //     };
+        
+    //     $term_category_2_name = $term_category_2->getName();
+    //     $term_category_2_url = $term_category_2->url();
+    //     array_push($breadcrumb_arr, ['url' => $term_category_2_url, 'text' => $term_category_2_name]);
+    //   }
+    //   else{
+    //     $field_category_3 = $node->get('field_category_3')->getValue();
+    //     $tid = $field_category_3[0]['target_id'];
+    //     $term_category_3 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+
+    //     if (count($field_category_3)){
+    //       if($term_category_3->hasField('field_related_categories')){
+    //         $first_properties_obj = $term_category_3->get('field_related_categories')->first();
+    //         if ($first_properties_obj){
+    //           $tid_group_obj = $first_properties_obj->getValue();
+    //           $tid_group = $tid_group_obj['target_id'];
+    //           $term_group = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid_group);
+    //           $term_group_name = $term_group->getName();
+    //           $term_group_url = $term_group->url();
+    //           array_push($breadcrumb_arr, ['url' => $term_group_url, 'text' => $term_group_name]);
+    //         };
+    //       };
+          
+    //       $term_category_3_name = $term_category_3->getName();
+    //       $term_category_3_url = $term_category_3->url();
+    //       array_push($breadcrumb_arr, ['url' => $term_category_3_url, 'text' => $term_category_3_name]);
+    //     }
+    //   }
+      
+    // }
+    array_push($GLOBALS['breadcrumb_arr'], ['url' => NULL, 'text' => $node->getTitle()]);
+    $renderable = [
+      '#theme' => 'arc_breadcrumb',
+      '#breadcrumb' => $GLOBALS['breadcrumb_arr'],
+    ];
+
+    $rendered = \Drupal::service('renderer')->render($renderable);
+    $node->set('field_breadcrumbs', ['value' => $rendered, 'format' => 'full_html']);
+
+  }
+}
+
+function arc_breadcrumb_theme($existing, $type, $theme, $path){
+  return  [
+    'arc_breadcrumb' => [
+      'variables' => [
+        'breadcrumb' => NULL,
+      ],
+    ],
+  ];
+}

@@ -1,0 +1,15 @@
+arc_breadcrumb.update_breadcrumb:
+  path: '/admin/arc-breadcrumb'
+  defaults:
+    _form: 'Drupal\arc_breadcrumb\Form\updateBreadcrumbForm'
+    _title: 'Arc breadcrumb'
+  requirements:
+    _permission: 'access content'
+
+# arc_breadcrumb.test:
+#   path: '/admin/arc-breadcrumb-test'
+#   defaults:
+#     _controller: 'Drupal\arc_breadcrumb\Controller\BreadcrumbStatusController::test'
+#     _title: 'Arc breadcrumb'
+#   requirements:
+#     _permission: 'access content'
