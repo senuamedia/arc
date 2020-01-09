@@ -1270,6 +1270,9 @@ body.path-volunteer {
             padding: 0 12.5px;
             .views-field-field-photos {
                 min-height: 277px;
+                img {
+                    width: 100%;
+                }
             }
             .views-field-title {
                 margin-top: 20px;

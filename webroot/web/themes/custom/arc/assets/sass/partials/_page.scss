@@ -367,7 +367,7 @@ body:not(.path-frontpage) .banner {
 	margin-top: -2px;
 	z-index: 99;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px 0px;
-	.breadcrumb {
+	.block-arc-breadcrumb {
 		max-width: 1230px;
 		background: transparent;
 		margin: 0 auto;
@@ -376,6 +376,19 @@ body:not(.path-frontpage) .banner {
 		font-size: 14px;
 		white-space: nowrap;
 		display: flex;
+		.breadcrumb {
+			background: transparent;
+			margin-bottom: 0;
+			padding: 0;
+		}
+		ol {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		li {
+			display: inline;
+		} 
 		li + li::before {
 			content: '>';
 			color: #000;
