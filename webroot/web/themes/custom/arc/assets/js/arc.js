@@ -6,7 +6,6 @@
       $(window).once().on("load", function () {
         Drupal.arc.placeholder();
         Drupal.arc.arcSlider();
-        Drupal.arc.arcPhotosSlider();
         Drupal.arc.whatOurVolunteerSay(); 
         Drupal.arc.masonryPhotography();
         Drupal.arc.attachmentBanner();
@@ -20,6 +19,7 @@
       });
 
       $(document).ready(function() {
+        Drupal.arc.arcPhotosSlider();
         Drupal.arc.topicSubTerm();
       });
     }
@@ -47,15 +47,29 @@
       slider.slick({
         infinite: true,
         arrows : true,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         responsive: [{
-           breakpoint: 991,
-           settings: {
-              touchMove: true,
-              slidesToShow: 3,
-              slidesToScroll: 1
-           }
+          breakpoint: 1401,
+          settings: {
+            touchMove: true,
+            slidesToShow: 4,
+            slidesToScroll: 1
+          }
+        },{
+          breakpoint: 1231,
+          settings: {
+            touchMove: true,
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },{
+          breakpoint: 992,
+          settings: {
+            touchMove: true,
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
         },{
           breakpoint: 600,
           settings: {
@@ -63,15 +77,13 @@
             slidesToScroll: 1,
             touchMove: true,
           }
-        },
-        {
-           breakpoint: 400,
-           settings: {
-              arrows: false,
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              touchMove: true,
-           }
+        },{
+          breakpoint: 400,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            touchMove: true,
+          }
         }]
       });
 

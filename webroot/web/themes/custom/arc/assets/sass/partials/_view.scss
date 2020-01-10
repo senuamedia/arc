@@ -1142,8 +1142,8 @@ body.path-volunteer {
     }
 }
 .photos-slider {
-    /*.slick-track  {
-        display: flex;
+    .slick-track  {
+        /*display: flex;
         justify-content: space-between;
         margin: 0 -12.5px;
         .slick-slide {
@@ -1152,18 +1152,24 @@ body.path-volunteer {
             max-width: 302px;
             flex: 0 0 302px;
             padding: 0 12.5px;
-        }
+        }*/
         .views-row {
+            .views-field-field-photos {
+                img {
+                    margin: 0 auto;
+                }
+            }
             .views-field-thumbnail__alt {
                 margin-top: 20px;
                 font-size: 18px;
+                padding-left: 15px;
                 color: #000;
                 line-height: 22px;
                 font-weight: 600;
                 text-decoration: underline;
             }
         }
-    }*/
+    }
     .slick-arrow {
         width: 60px;
         height: 60px;
